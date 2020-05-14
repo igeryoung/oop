@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".select_Activity"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textSize="40sp"/>
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="date"
+        android:textSize="40sp"/>
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="people"
+        android:textSize="40sp"/>
+    <TextView
+
+        android:gravity="center_horizontal"
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="price per person"
+        android:textSize="40sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="欲訂 : "
+                android:layout_marginLeft="30dp"
+                android:textSize="40sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="老人"
+                android:layout_marginLeft="30dp"
+                android:textSize="40sp"
+                />
+            <EditText
+                android:id="@+id/input_old"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textSize="40sp"
+                android:layout_width="100dp"
+                android:inputType="textFilter"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="成人"
+                android:layout_marginLeft="170dp"
+                android:textSize="40sp"
+                />
+            <EditText
+                android:id="@+id/input_adult"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textSize="40sp"
+                android:layout_width="100dp"
+                android:inputType="textFilter"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="嬰兒"
+                android:layout_marginLeft="170dp"
+                android:textSize="40sp"
+                />
+            <EditText
+                android:id="@+id/input_baby"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:textSize="40sp"
+                android:layout_width="100dp"
+                android:inputType="textFilter"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="使用者ID:"
+            android:layout_marginLeft="10dp"
+            android:textSize="40sp"
+            />
+        <EditText
+            android:id="@+id/input_id"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="40sp"
+            android:layout_width="200dp"
+            android:inputType="textFilter"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="80dp"
+            android:text="確定"
+            android:textSize="40sp"
+            android:onClick="certain"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:text="取消"
+            android:textSize="40sp"
+            android:onClick="cancel"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
+
