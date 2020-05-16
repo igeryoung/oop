@@ -1,6 +1,15 @@
 package com.example.mainpage;
 
 public class CostumerOrder {
+    public  static final String DATABASE_TABLE = "ORDER_TABLE";
+
+    public static final String KEY_OI = "orderId";
+    public static final String KEY_CI = "costumerId";
+    public static final String KEY_AD = "adult";
+    public static final String KEY_CH = "child";
+    public static final String KEY_BA = "baby";
+    public static final String KEY_PR = "price";
+
     private int costumerId;
     private int orderId;
     private int adult;
