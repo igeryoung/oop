@@ -3,7 +3,6 @@ package com.example.mainpage;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import androidx.annotation.Nullable;
 
 public class OrderDB extends SQLiteOpenHelper {
     private final static int _DBVersion = 1; //<-- version
@@ -21,7 +20,10 @@ public class OrderDB extends SQLiteOpenHelper {
                             + CostumerOrder.KEY_AD + " INTEGER, "
                             + CostumerOrder.KEY_CH + " INTEGER, "
                             + CostumerOrder.KEY_BA + " INTEGER, "
-                            + CostumerOrder.KEY_PR + " INTEGER )";
+                            + CostumerOrder.KEY_PR + " INTEGER, "
+                            + CostumerOrder.KEY_TI + " TEXT, "
+                            + CostumerOrder.KEY_SD + " TEXT, "
+                            + CostumerOrder.KEY_ED + " TEXT )";
         db.execSQL(SQL);
     }
 

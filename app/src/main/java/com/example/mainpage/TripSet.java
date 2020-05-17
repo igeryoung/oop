@@ -1,6 +1,14 @@
 package com.example.mainpage;
 
 public class TripSet {
+    public  static final String DATABASE_TABLE = "TRIP_SET_TABLE";
+
+    public static final String KEY_TI = "title";
+    public static final String KEY_SD = "start_date";
+    public static final String KEY_ED = "end_date";
+    public static final String KEY_PR = "price";
+    public static final String KEY_P_min = "people_min";
+    public static final String KEY_P_max = "people_max";
 
     private String title;
     private String start_date;
