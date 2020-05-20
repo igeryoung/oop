@@ -1,11 +1,15 @@
 package com.example.mainpage;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -22,7 +26,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class menu_Activity<Tripset> extends AppCompatActivity {
+public class menu_Activity extends AppCompatActivity {
 
     //list arg
     private ListView listView;
@@ -38,12 +42,11 @@ public class menu_Activity<Tripset> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_);
-        //read data
-        //readCSV();
 
         //set listView
         listView = findViewById(R.id.my_list_view);
         initList();
+
         //Click list event
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,25 +100,6 @@ public class menu_Activity<Tripset> extends AppCompatActivity {
         data.add(d);
     }
 
-    //file reading
-    private void readCSV(){
-
-        InputStream is = getResources().openRawResource(R.raw.trip_data_all);
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(is, Charset.forName("UTF-8"))
-        );
-
-        String line = "";
-        try {
-            while ((line = reader.readLine()) != null) {
-                //data deal
-                System.out.println(line);
-            }
-        }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
 
     //click! search
     public void search(View v) {
@@ -127,9 +111,9 @@ public class menu_Activity<Tripset> extends AppCompatActivity {
         data.remove();
         tripsets = null;
         /*
-        *get data through db
-        * tripsets = ;
-        */
+         *get data through db
+         * tripsets = ;
+         */
 
         //show new search
 
@@ -139,8 +123,33 @@ public class menu_Activity<Tripset> extends AppCompatActivity {
     }
 
     public void MyOrder(View view) {
-        Intent my_order = new Intent(menu_Activity.this , MyOrderActivity.class);
-        //System.out.println("ready to jump");
-        startActivity(my_order);
+
+        String id = "";
+
+
+        LayoutInflater inflater = LayoutInflater.from(menu_Activity.this);
+        final View v = inflater.inflate(R.layout.alertdialog_layout, null);
+
+        new AlertDialog.Builder(menu_Activity.this)
+                .setTitle("請輸入你的id")
+                .setView(v)
+                .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = (EditText) (v.findViewById(R.id.editText1));
+                        String id = editText.getText().toString();
+                        Toast.makeText(getApplicationContext(), "你的id是" +
+                                id, Toast.LENGTH_SHORT).show();
+                        //跳頁
+                        Intent next_page = new Intent(menu_Activity.this , MyOrderActivity.class );
+                        next_page.putExtra("id" , id);
+                        startActivityForResult(next_page , 0);
+                    }
+                })
+                .show();
+
+    }
+
+    private void setToast(String toString) {
     }
 }

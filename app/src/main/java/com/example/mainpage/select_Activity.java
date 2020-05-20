@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class select_Activity extends AppCompatActivity {
     private TripSet tripset;
-    private int[] order;
+    private int[] order = {0,0,0};
     private String order_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,6 @@ public class select_Activity extends AppCompatActivity {
         tripset = new TripSet(info);
         //show info
         showInfo();
-
-
     }
 
     public void certain(View view) {
@@ -37,6 +35,12 @@ public class select_Activity extends AppCompatActivity {
         String input_baby = text_baby.getText().toString();
         EditText text_id = findViewById(R.id.input_id);
         order_id = text_id.getText().toString();
+
+        if(text_id.getText().length() == 0){
+            Toast.makeText(select_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try {
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {
                 throw new Exception();
@@ -44,6 +48,7 @@ public class select_Activity extends AppCompatActivity {
             order[0] = Integer.parseInt(input_old);
             order[1] = Integer.parseInt(input_adult);
             order[2] = Integer.parseInt(input_baby);
+            System.out.println(""+order[0] + "," + order[1] + "," + order[2] );
             int total = order[0] + order[1] + order[2];
 
             if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){

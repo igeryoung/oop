@@ -44,6 +44,19 @@ public class CostumerOrder {
         this.end_date = end_date;
     }
 
+    public CostumerOrder(String info  ){
+        String[] tokens = info.split(",");
+        this.title = tokens[0];
+        this.costumerId = Integer.parseInt(tokens[1]);
+        this.start_date = tokens[2];
+        this.end_date = tokens[3];
+        this.adult = Integer.parseInt(tokens[4]);
+        this.child = Integer.parseInt(tokens[5]);
+        this.baby = Integer.parseInt(tokens[6]);
+        this.price = Integer.parseInt(tokens[7]);
+        this.orderId = Integer.parseInt(tokens[8]);
+    }
+
     public int getCostumerId() {
         return costumerId;
     }

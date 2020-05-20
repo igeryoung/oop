@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.appcompat.widget.LinearLayoutCompat
+
+    android:id="@+id/list"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#777"
+        />
+    <TextView
+        android:id="@+id/order_title"
+        android:text="title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#775"
+        />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/order_code"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="code"
+            />
+        <TextView
+            android:id="@+id/order_start_date"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="date1"
+            />
+        <TextView
+            android:id="@+id/order_end_date"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="date2"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#775"
+        />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/order_people_adult"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="p1"
+            />
+        <TextView
+            android:id="@+id/order_people_child"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="p2"
+            />
+        <TextView
+            android:id="@+id/order_people_baby"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="p3"
+            />
+        <TextView
+            android:id="@+id/order_price"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="price"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#777"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -14,10 +14,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class MyOrderActivity extends AppCompatActivity {
+
     private ListView listView;
-    private String[] from = {"title" , "start_date", "end_date", "price", "people_min", "people_max"};
-    private int[] to = {R.id.item_title , R.id.item_start_date, R.id.item_end_date,
-            R.id.item_price, R.id.item_people_min, R.id.item_people_max};
+    private String[] from = {"title" , "code" ,"start_date", "end_date", "adult", "child", "baby" , "price"};
+    private int[] to = {R.id.order_title , R.id.order_code, R.id.order_start_date,
+            R.id.order_end_date, R.id.order_people_adult, R.id.order_people_child , R.id.order_people_baby , R.id.order_price};
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
     TripSet[] tripsets;
@@ -27,7 +28,12 @@ public class MyOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
 
-        listView = findViewById(R.id.my_list_view);
+        //get msg
+        Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+        System.out.println(id);
+        //create list
+        listView = findViewById(R.id.order_list);
         initList();
         //Click list event
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -37,21 +43,21 @@ public class MyOrderActivity extends AppCompatActivity {
                 //data in tripset[i]
                 //select_info = tripsets[pos].allToString();
 
-                String select_info = "title,date1,date2,1000,10,100";
+                String select_info = "title,100,date1,date2,10,10,100,1000,20"/*20 is id*/;
                 System.out.println("ready to intent");
                 Intent next_page = new Intent(MyOrderActivity.this , order_item_Activity.class );
-                next_page.putExtra("info" , select_info);
+                next_page.putExtra("order" , select_info);
                 //startActivity(next_page);
-                startActivityForResult(next_page , 0);
+                startActivityForResult(next_page , 1);
             }
         });
     }
-        private void initList() {
-        adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
+    private void initList() {
+        adapter = new SimpleAdapter(this, data, R.layout.order_layout, from , to);
         listView.setAdapter(adapter);
         HashMap<String , String> d = new HashMap<>();
         for(int k = 0; k < 20 ; k++){
-            for(int i = 0; i < 6 ; i++){
+            for(int i = 0; i < 8 ; i++){
                 d.put(from[i] , from[i]);
             }
             data.add(d);
