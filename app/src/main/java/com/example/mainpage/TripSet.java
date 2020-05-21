@@ -1,5 +1,7 @@
 package com.example.mainpage;
 
+import android.telephony.mbms.StreamingServiceInfo;
+
 public class TripSet {
     public  static final String DATABASE_TABLE = "TRIP_SET_TABLE";
 
@@ -9,6 +11,8 @@ public class TripSet {
     public static final String KEY_PR = "price";
     public static final String KEY_P_min = "people_min";
     public static final String KEY_P_max = "people_max";
+    public static final String KEY_TC = "travel_code";
+    public static final String KEY_TCN = "travel_code_name";
 
     private String title;
     private String start_date;
@@ -16,14 +20,18 @@ public class TripSet {
     private int price;
     private int people_min;
     private int people_max;
+    private int travel_code;
+    private String travel_code_name;
 
-    public TripSet(String title, String start_date, String end_date, int price, int people_min, int people_max) {
+    public TripSet(String title, String start_date, String end_date, int price, int people_min, int people_max, int travel_code, String travel_code_name) {
         this.title = title;
         this.start_date = start_date;
         this.end_date = end_date;
         this.price = price;
         this.people_min = people_min;
         this.people_max = people_max;
+        this.travel_code = travel_code;
+        this.travel_code_name = travel_code_name;
     }
 
     public TripSet (String info) {
@@ -83,6 +91,14 @@ public class TripSet {
     public void setPeople_max(int people_max) {
         this.people_max = people_max;
     }
+
+    public int getTravel_code() { return this.travel_code; }
+
+    public void setTravel_code(int travel_code) { this.travel_code = travel_code; }
+
+    public String getTravel_code_name() { return this.travel_code_name; }
+
+    public void setTravel_code_name(String travel_code_name) { this.travel_code_name = travel_code_name; }
 
     public String allToString(){
         String info = title;

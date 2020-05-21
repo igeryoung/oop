@@ -20,7 +20,9 @@ public class TripDB extends SQLiteOpenHelper {
                             + TripSet.KEY_ED + " TEXT, "
                             + TripSet.KEY_PR + " INTEGER, "
                             + TripSet.KEY_P_max + "INTEGER, "
-                            + TripSet.KEY_P_min + " INTEGER )";
+                            + TripSet.KEY_P_min + " INTEGER, "
+                            + TripSet.KEY_TC + "INTEGER, "
+                            + TripSet.KEY_TCN + "TEXT )";
         db.execSQL(SQL);
     }
 

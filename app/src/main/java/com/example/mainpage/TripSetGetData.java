@@ -2,16 +2,86 @@ package com.example.mainpage;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TripSetGetData {
     private TripDB dbService;
 
-    public TripSetGetData(Context context) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public TripSetGetData(Context context) throws IOException {
         dbService = new TripDB(context);
+        AssetManager am = context.getAssets();
+        InputStream is_csv = am.open("trip_data_all.csv");
+        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv));
+
+        try {
+            String csvLine;
+            while ((csvLine = reader_csv.readLine()) != null) {
+                String[] row = csvLine.split(",");
+                insert(new TripSet(row[0], row[4], row[5], Integer.valueOf(row[3]), Integer.valueOf(row[6]), Integer.valueOf(row[7]), Integer.valueOf(row[1]), ""));
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Error in reading CSV file: "+ex);
+        }
+        finally {
+            try {
+                is_csv.close();
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error while closing input stream: "+e);
+            }
+        }
+
+        InputStream is_json = am.open("travel_code.json");
+        BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json));
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            String line;
+            while ((line = reader_json.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Error in reading JSON file: "+ex);
+        }
+        finally {
+            try {
+                is_json.close();
+            }
+            catch (IOException e) {
+                throw new RuntimeException("Error while closing input stream: "+e);
+            }
+        }
+
+        try{
+            JSONObject travel = new JSONObject(stringBuilder.toString());
+            JSONArray array = new JSONArray(travel);
+            for(int i=0 ; i < array.length() ; i++){
+                JSONObject jsonObject = array.getJSONObject(i);
+                int travel_code = jsonObject.getInt("travel_code");
+                String travel_code_name = jsonObject.getString("travel_code_name");
+                updateTripSetTravelName(travel_code, travel_code_name);
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public int insert(TripSet trip) {
@@ -23,6 +93,8 @@ public class TripSetGetData {
         values.put(TripSet.KEY_PR, trip.getPrice());
         values.put(TripSet.KEY_P_min, trip.getPeople_min());
         values.put(TripSet.KEY_P_max, trip.getPeople_max());
+        values.put(TripSet.KEY_TC, trip.getTravel_code());
+        values.put(TripSet.KEY_TCN, trip.getTravel_code_name());
 
         // Inserting Row
         db.insert(TripSet.DATABASE_TABLE, null, values);
@@ -38,7 +110,9 @@ public class TripSetGetData {
                 TripSet.KEY_ED + "," +
                 TripSet.KEY_PR + "," +
                 TripSet.KEY_P_min + "," +
-                TripSet.KEY_P_max +
+                TripSet.KEY_P_max + "," +
+                TripSet.KEY_TC + "," +
+                TripSet.KEY_TCN + "," +
                 " FROM " + TripSet.DATABASE_TABLE;
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
@@ -51,7 +125,9 @@ public class TripSetGetData {
                                     cursor.getString(cursor.getColumnIndex(TripSet.KEY_ED)),
                                     cursor.getInt(cursor.getColumnIndex(TripSet.KEY_PR)),
                                     cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
-                                    cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max))
+                                    cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
+                                    cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
+                                    cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
                                      );
                 TripSetList.add(checkpoint);
             } while (cursor.moveToNext());
@@ -67,7 +143,7 @@ public class TripSetGetData {
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select distinct * from " + TripSet.DATABASE_TABLE + "where " + TripSet.KEY_TI +
-                                    " LIKE '%?%'", new String[]{target});
+                                    " LIKE '%?%' OR " + TripSet.KEY_TCN + " LIKE '%?%'", new String[]{target, target});
 
         if (cursor.moveToFirst()) {
             do {
@@ -76,7 +152,9 @@ public class TripSetGetData {
                         cursor.getString(cursor.getColumnIndex(TripSet.KEY_ED)),
                         cursor.getInt(cursor.getColumnIndex(TripSet.KEY_PR)),
                         cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
-                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max))
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
+                        cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
                 );
                 TripSetList.add(checkpoint);
             } while (cursor.moveToNext());
@@ -102,7 +180,9 @@ public class TripSetGetData {
                                                 cursor.getString(cursor.getColumnIndex(TripSet.KEY_ED)),
                                                 cursor.getInt(cursor.getColumnIndex(TripSet.KEY_PR)),
                                                 cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
-                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max))
+                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
+                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
+                                                cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
                                                 );
                 TripSetList.add(checkpoint);
             }
@@ -128,5 +208,14 @@ public class TripSetGetData {
             db.close();
             return 1;
         }
+    }
+
+    public int updateTripSetTravelName(int travel_code, String travel_code_name){
+        SQLiteDatabase db = dbService.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("travel_code_name", travel_code_name);
+        db.update(TripSet.DATABASE_TABLE, values, "travel_code=?", new String[]{String.valueOf(travel_code)});
+        db.close();
+        return 1;
     }
 }
