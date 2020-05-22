@@ -1,10 +1,12 @@
 package com.example.mainpage;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class menu_Activity extends AppCompatActivity {
 
     //list arg
@@ -36,13 +39,27 @@ public class menu_Activity extends AppCompatActivity {
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
     TripSet[] tripsets;
+    private TripSetGetData TripDB;
+    private ArrayList<TripSet> list;
+
     //
     private int position = -1;
+
+    public menu_Activity() throws IOException {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_);
 
+        try {
+            TripDB = new TripSetGetData((menu_Activity.this));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        list = TripDB.getAll();
         //set listView
         listView = findViewById(R.id.my_list_view);
         initList();
@@ -61,7 +78,8 @@ public class menu_Activity extends AppCompatActivity {
 
                 //data in tripset[i]
                 //select_info = tripsets[pos].allToString();
-                String select_info = "title,date1,date2,1000,10,100";
+                //String select_info = "title,date1,date2,1000,10,100";
+                String select_info = list.get(pos).allToString();
 
                 Intent next_page = new Intent(menu_Activity.this , select_Activity.class );
                 next_page.putExtra("info" , select_info);

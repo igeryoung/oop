@@ -19,39 +19,41 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static android.os.Build.VERSION_CODES.KITKAT;
+
 public class TripSetGetData {
     private TripDB dbService;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public TripSetGetData(Context context) throws IOException {
         dbService = new TripDB(context);
-        AssetManager am = context.getAssets();
-        InputStream is_csv = am.open("trip_data_all.csv");
-        BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv));
-
+    }
+    /**
+    @RequiresApi(api = KITKAT)
+    public int readFile(Context context) throws IOException {
         try {
+            AssetManager am = context.getAssets();
+            InputStream is_csv = am.open("trip_data_all.csv");
+            BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv));
+
             String csvLine;
             while ((csvLine = reader_csv.readLine()) != null) {
                 String[] row = csvLine.split(",");
-                insert(new TripSet(row[0], row[4], row[5], Integer.valueOf(row[3]), Integer.valueOf(row[6]), Integer.valueOf(row[7]), Integer.valueOf(row[1]), ""));
+                System.out.println(csvLine);
+                System.out.println(row[3] + " " + row[1]);
+                insert(new TripSet(row[0], row[4], row[5], Integer.parseInt(row[3]), Integer.parseInt(row[6]), Integer.parseInt(row[7]), Integer.parseInt(row[1]), ""));
             }
         }
         catch (IOException ex) {
             throw new RuntimeException("Error in reading CSV file: "+ex);
         }
-        finally {
-            try {
-                is_csv.close();
-            }
-            catch (IOException e) {
-                throw new RuntimeException("Error while closing input stream: "+e);
-            }
-        }
 
-        InputStream is_json = am.open("travel_code.json");
-        BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json));
         StringBuilder stringBuilder = new StringBuilder();
+
         try {
+            AssetManager am = context.getAssets();
+            InputStream is_json = am.open("travel_code.json");
+            BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json));
+
             String line;
             while ((line = reader_json.readLine()) != null) {
                 stringBuilder.append(line);
@@ -59,14 +61,6 @@ public class TripSetGetData {
         }
         catch (IOException ex) {
             throw new RuntimeException("Error in reading JSON file: "+ex);
-        }
-        finally {
-            try {
-                is_json.close();
-            }
-            catch (IOException e) {
-                throw new RuntimeException("Error while closing input stream: "+e);
-            }
         }
 
         try{
@@ -83,8 +77,9 @@ public class TripSetGetData {
             e.printStackTrace();
         }
     }
+    */
 
-    public int insert(TripSet trip) {
+    public int insert(TripSet trip, TripDB dbService) {
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TripSet.KEY_TI, trip.getTitle());
@@ -104,7 +99,7 @@ public class TripSetGetData {
 
     public ArrayList<TripSet> getAll(){
         SQLiteDatabase db = dbService.getReadableDatabase();
-        String selectQuery =  "SELECT  " +
+        String selectQuery =  "SELECT " +
                 TripSet.KEY_TI + "," +
                 TripSet.KEY_SD + "," +
                 TripSet.KEY_ED + "," +
@@ -112,8 +107,9 @@ public class TripSetGetData {
                 TripSet.KEY_P_min + "," +
                 TripSet.KEY_P_max + "," +
                 TripSet.KEY_TC + "," +
-                TripSet.KEY_TCN + "," +
-                " FROM " + TripSet.DATABASE_TABLE;
+                TripSet.KEY_TCN +
+                " FROM " + TripSet.DATABASE_TABLE +
+                " LIMIT 5";
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -142,7 +138,7 @@ public class TripSetGetData {
         SQLiteDatabase db = dbService.getReadableDatabase();
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select distinct * from " + TripSet.DATABASE_TABLE + "where " + TripSet.KEY_TI +
+        Cursor cursor = db.rawQuery("select distinct * from " + TripSet.DATABASE_TABLE + " where " + TripSet.KEY_TI +
                                     " LIKE '%?%' OR " + TripSet.KEY_TCN + " LIKE '%?%'", new String[]{target, target});
 
         if (cursor.moveToFirst()) {
@@ -171,7 +167,7 @@ public class TripSetGetData {
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from " + TripSet.DATABASE_TABLE
-                + "where title=? AND start_date=? AND end_date=?", new String[]{title, start_date, end_date});
+                + " where title=? AND start_date=? AND end_date=?", new String[]{title, start_date, end_date});
 
         if(cursor.moveToFirst()){
             do{
@@ -210,7 +206,7 @@ public class TripSetGetData {
         }
     }
 
-    public int updateTripSetTravelName(int travel_code, String travel_code_name){
+    public int updateTripSetTravelName(int travel_code, String travel_code_name, TripDB dbService){
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("travel_code_name", travel_code_name);
