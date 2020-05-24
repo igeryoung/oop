@@ -46,20 +46,30 @@ public class menu_Activity extends AppCompatActivity {
     private int position = -1;
 
     public menu_Activity() throws IOException {
+        new Thread(){
+            public void run(){
+                try {
+                    TripDB = new TripSetGetData((menu_Activity.this));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_);
+        /**
+        new Thread(){
+            public void run(){
 
-        try {
-            TripDB = new TripSetGetData((menu_Activity.this));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+            }
+        }.start();
+        */
         list = TripDB.getAll();
+
         //set listView
         listView = findViewById(R.id.my_list_view);
         initList();
@@ -101,11 +111,16 @@ public class menu_Activity extends AppCompatActivity {
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
         listView.setAdapter(adapter);
-        HashMap<String , String> d = new HashMap<>();
-        for(int i = 0; i < 6 ; i++){
-            d.put(from[i] , from[i]);
+        for(int i=0 ; i<5 ; i++){
+            HashMap<String , String> d = new HashMap<>();
+            d.put(from[0], "title: " + list.get(i).getTitle());
+            d.put(from[1], "start date: " + list.get(i).getStart_date());
+            d.put(from[2], "end date: " + list.get(i).getEnd_date());
+            d.put(from[3], "price: " + String.valueOf(list.get(i).getPrice()));
+            d.put(from[4], "min people: " + String.valueOf(list.get(i).getPeople_min()));
+            d.put(from[5], "max people: " + String.valueOf(list.get(i).getPeople_max()));
+            data.add(d);
         }
-        data.add(d);
     }
 
     //renew the list

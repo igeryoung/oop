@@ -27,59 +27,8 @@ public class TripSetGetData {
     public TripSetGetData(Context context) throws IOException {
         dbService = new TripDB(context);
     }
-    /**
-    @RequiresApi(api = KITKAT)
-    public int readFile(Context context) throws IOException {
-        try {
-            AssetManager am = context.getAssets();
-            InputStream is_csv = am.open("trip_data_all.csv");
-            BufferedReader reader_csv = new BufferedReader(new InputStreamReader(is_csv));
 
-            String csvLine;
-            while ((csvLine = reader_csv.readLine()) != null) {
-                String[] row = csvLine.split(",");
-                System.out.println(csvLine);
-                System.out.println(row[3] + " " + row[1]);
-                insert(new TripSet(row[0], row[4], row[5], Integer.parseInt(row[3]), Integer.parseInt(row[6]), Integer.parseInt(row[7]), Integer.parseInt(row[1]), ""));
-            }
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("Error in reading CSV file: "+ex);
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            AssetManager am = context.getAssets();
-            InputStream is_json = am.open("travel_code.json");
-            BufferedReader reader_json = new BufferedReader(new InputStreamReader(is_json));
-
-            String line;
-            while ((line = reader_json.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("Error in reading JSON file: "+ex);
-        }
-
-        try{
-            JSONObject travel = new JSONObject(stringBuilder.toString());
-            JSONArray array = new JSONArray(travel);
-            for(int i=0 ; i < array.length() ; i++){
-                JSONObject jsonObject = array.getJSONObject(i);
-                int travel_code = jsonObject.getInt("travel_code");
-                String travel_code_name = jsonObject.getString("travel_code_name");
-                updateTripSetTravelName(travel_code, travel_code_name);
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
-    public int insert(TripSet trip, TripDB dbService) {
+    public int insert(TripSet trip) {
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TripSet.KEY_TI, trip.getTitle());
