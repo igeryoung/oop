@@ -46,7 +46,7 @@ public class TripSetGetData {
         return 1;
     }
 
-    public ArrayList<TripSet> getAll(){
+    public ArrayList<TripSet> getAll(int amount){
         SQLiteDatabase db = dbService.getReadableDatabase();
         String selectQuery =  "SELECT " +
                 TripSet.KEY_TI + "," +
@@ -58,7 +58,7 @@ public class TripSetGetData {
                 TripSet.KEY_TC + "," +
                 TripSet.KEY_TCN +
                 " FROM " + TripSet.DATABASE_TABLE +
-                " LIMIT 5";
+                " LIMIT " + String.valueOf(amount);
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
