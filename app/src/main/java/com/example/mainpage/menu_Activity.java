@@ -38,11 +38,9 @@ public class menu_Activity extends AppCompatActivity {
             R.id.item_price, R.id.item_people_min, R.id.item_people_max};
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
-    TripSet[] tripsets;
+
     private TripSetGetData TripDB;
     private ArrayList<TripSet> list;
-
-    //
     private int position = -1;
 
     public menu_Activity() throws IOException {
@@ -56,7 +54,6 @@ public class menu_Activity extends AppCompatActivity {
             }
         }.start();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +83,6 @@ public class menu_Activity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
         super.onActivityResult(requestCode, resultCode, data2);
@@ -101,7 +97,6 @@ public class menu_Activity extends AppCompatActivity {
         list = TripDB.searchBySubtitle(input);
         renewList();
     }
-
     //list create
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
@@ -117,9 +112,17 @@ public class menu_Activity extends AppCompatActivity {
             data.add(d);
         }
     }
-
+    //click! search
+    public void search(View v) {
+        //get searching input
+        EditText text = findViewById(R.id.text_input);
+        String input = text.getText().toString();
+        //clean old search
+        data.clear();
+        list = TripDB.searchBySubtitle(input);
+        renewList();
+    }
     //renew the list
-
     private  void renewList(){
         data.clear();
         for(int i=0 ; i< list.size() ; i++){
@@ -135,29 +138,11 @@ public class menu_Activity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-
-    //click! search
-    public void search(View v) {
-        //get searching input
-        EditText text = findViewById(R.id.text_input);
-        String input = text.getText().toString();
-
-        //clean old search
-        data.clear();
-
-        list = TripDB.searchBySubtitle(input);
-        renewList();
-
-    }
-
     public void MyOrder(View view) {
-
-        String id = "";
-
-
+        //init
         LayoutInflater inflater = LayoutInflater.from(menu_Activity.this);
         final View v = inflater.inflate(R.layout.alertdialog_layout, null);
-
+        //ID request and login
         new AlertDialog.Builder(menu_Activity.this)
                 .setTitle("請輸入你的id")
                 .setView(v)

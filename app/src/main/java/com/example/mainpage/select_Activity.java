@@ -14,7 +14,7 @@ import java.io.IOException;
 public class select_Activity extends AppCompatActivity {
     private TripSet tripset;
     private int[] order = {0,0,0};
-    private String order_id;
+    private int order_id;
     private OrderGetData OrderDB;
 
     public select_Activity() throws IOException {
@@ -36,6 +36,16 @@ public class select_Activity extends AppCompatActivity {
         //show info
         showInfo();
     }
+    public void showInfo(){
+        TextView title = findViewById(R.id.title);
+        title.setText(tripset.getTitle());
+        TextView date = findViewById(R.id.date);
+        date.setText("from : " + tripset.getStart_date() + " to : " + tripset.getEnd_date());
+        TextView people = findViewById(R.id.people);
+        people.setText("min : " + tripset.getPeople_min() + " max : " + tripset.getPeople_max());
+        TextView price = findViewById(R.id.price);
+        price.setText("price : " + tripset.getPrice());
+    }
 
     public void certain(View view) {
         EditText text_old = findViewById(R.id.input_old);
@@ -45,8 +55,9 @@ public class select_Activity extends AppCompatActivity {
         EditText text_baby = findViewById(R.id.input_baby);
         String input_baby = text_baby.getText().toString();
         EditText text_id = findViewById(R.id.input_id);
-        order_id = text_id.getText().toString();
+        order_id = Integer.parseInt(text_id.getText().toString());
 
+        //empty id exception
         if(text_id.getText().length() == 0){
             Toast.makeText(select_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
             return;
@@ -59,15 +70,18 @@ public class select_Activity extends AppCompatActivity {
             order[0] = Integer.parseInt(input_old);
             order[1] = Integer.parseInt(input_adult);
             order[2] = Integer.parseInt(input_baby);
+
             System.out.println(""+order[0] + "," + order[1] + "," + order[2] );
             int total = order[0] + order[1] + order[2];
-
+            int price_total = tripset.getPrice() * total;
             if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){
                 Toast.makeText(select_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{
                 //pass all exception and make an order
-                OrderDB.insert()
+                CostumerOrder final_order = new CostumerOrder(0 , order_id , order[0] , order[1] , order[2] , price_total,
+                tripset.getTitle() , tripset.getStart_date() , tripset.getEnd_date());
+                OrderDB.insert(final_order);
                 finish();
             }
 
@@ -88,17 +102,6 @@ public class select_Activity extends AppCompatActivity {
         //add this order to database
 
         super.finish();
-    }
-
-    public void showInfo(){
-        TextView title = findViewById(R.id.title);
-        title.setText(tripset.getTitle());
-        TextView date = findViewById(R.id.date);
-        date.setText("from : " + tripset.getStart_date() + " to : " + tripset.getEnd_date());
-        TextView people = findViewById(R.id.people);
-        people.setText("min : " + tripset.getPeople_min() + " max : " + tripset.getPeople_max());
-        TextView price = findViewById(R.id.price);
-        price.setText("price : " + tripset.getPrice());
     }
 
     public static boolean isInteger(String s) {
