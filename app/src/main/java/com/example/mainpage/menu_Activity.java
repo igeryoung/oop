@@ -62,9 +62,8 @@ public class menu_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_);
 
-        list = TripDB.getAll(7);
-
         //set listView
+        list = TripDB.getAll(20);
         listView = findViewById(R.id.my_list_view);
         initList();
 
@@ -74,17 +73,13 @@ public class menu_Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 position = pos;
                 Toast.makeText(menu_Activity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
-                if(false/*people lef == 0*/){
+                if(list.get(pos).getPeople_max() == 0){
                     Toast.makeText(menu_Activity.this, "機位已售罄" + pos, Toast.LENGTH_SHORT).show();
                     position = -1;
                     return;
                 }
 
-                //data in tripset[i]
-                //select_info = tripsets[pos].allToString();
-                //String select_info = "title,date1,date2,1000,10,100";
                 String select_info = list.get(pos).allToString();
-
                 Intent next_page = new Intent(menu_Activity.this , select_Activity.class );
                 next_page.putExtra("info" , select_info);
                 startActivityForResult(next_page , 0);
@@ -93,19 +88,25 @@ public class menu_Activity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
+        super.onActivityResult(requestCode, resultCode, data2);
         System.out.println("order = "+ resultCode);
+        TripSet target = list.get(position);
+        TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , requestCode * -1);
         position = -1;
-        //renew the data base
-        //add travel to my_travel in data base
+
+        EditText text = findViewById(R.id.text_input);
+        String input = text.getText().toString();
+        data.clear();
+        list = TripDB.searchBySubtitle(input);
+        renewList();
     }
 
     //list create
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
         listView.setAdapter(adapter);
-        for(int i=0 ; i<7 ; i++){
+        for(int i=0 ; i< 20 ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
             d.put(from[1], "start date: " + list.get(i).getStart_date());
@@ -119,15 +120,19 @@ public class menu_Activity extends AppCompatActivity {
 
     //renew the list
 
-    private  void renewList(TripSet trip){
-        HashMap<String , String> d = new HashMap<>();
-        d.put(from[0], "title: " + trip.getTitle());
-        d.put(from[1], "start date: " + trip.getStart_date());
-        d.put(from[2], "end date: " + trip.getEnd_date());
-        d.put(from[3], "price: " + String.valueOf(trip.getPrice()));
-        d.put(from[4], "min people: " + String.valueOf(trip.getPeople_min()));
-        d.put(from[5], "max people: " + String.valueOf(trip.getPeople_max()));
-        data.add(d);
+    private  void renewList(){
+        data.clear();
+        for(int i=0 ; i< list.size() ; i++){
+            HashMap<String , String> d = new HashMap<>();
+            d.put(from[0], "title: " + list.get(i).getTitle());
+            d.put(from[1], "start date: " + list.get(i).getStart_date());
+            d.put(from[2], "end date: " + list.get(i).getEnd_date());
+            d.put(from[3], "price: " + String.valueOf(list.get(i).getPrice()));
+            d.put(from[4], "min people: " + String.valueOf(list.get(i).getPeople_min()));
+            d.put(from[5], "max people: " + String.valueOf(list.get(i).getPeople_max()));
+            data.add(d);
+        }
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -138,20 +143,11 @@ public class menu_Activity extends AppCompatActivity {
         String input = text.getText().toString();
 
         //clean old search
-        data.remove();
-        ArrayList<TripSet> tripsets;
+        data.clear();
 
-        tripsets = TripDB.searchBySubtitle("波蘭");
-        /*
-         *get data through db
-         * tripsets = ;
-         */
+        list = TripDB.searchBySubtitle(input);
+        renewList();
 
-        //show new search
-
-        for(int i = 0 ; i < tripsets.size() ; i++)
-            renewList(tripsets.get(i));
-        adapter.notifyDataSetChanged();
     }
 
     public void MyOrder(View view) {

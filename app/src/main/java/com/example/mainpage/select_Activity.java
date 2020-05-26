@@ -9,10 +9,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class select_Activity extends AppCompatActivity {
     private TripSet tripset;
     private int[] order = {0,0,0};
     private String order_id;
+    private OrderGetData OrderDB;
+
+    public select_Activity() throws IOException {
+        new Thread(){
+            public void run(){
+                OrderDB = new OrderGetData((select_Activity.this));
+            }
+        }.start();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +66,8 @@ public class select_Activity extends AppCompatActivity {
                 Toast.makeText(select_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{
+                //pass all exception and make an order
+                OrderDB.insert()
                 finish();
             }
 
