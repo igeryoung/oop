@@ -61,14 +61,8 @@ public class menu_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_);
-        /**
-        new Thread(){
-            public void run(){
 
-            }
-        }.start();
-        */
-        list = TripDB.getAll();
+        list = TripDB.getAll(7);
 
         //set listView
         listView = findViewById(R.id.my_list_view);
@@ -111,7 +105,7 @@ public class menu_Activity extends AppCompatActivity {
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
         listView.setAdapter(adapter);
-        for(int i=0 ; i<5 ; i++){
+        for(int i=0 ; i<7 ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
             d.put(from[1], "start date: " + list.get(i).getStart_date());
@@ -125,11 +119,14 @@ public class menu_Activity extends AppCompatActivity {
 
     //renew the list
 
-    private  void renewList(/*tripset*/){
+    private  void renewList(TripSet trip){
         HashMap<String , String> d = new HashMap<>();
-        for(int i = 0; i < 6 ; i++){
-            d.put(from[i] , from[i]);
-        }
+        d.put(from[0], "title: " + trip.getTitle());
+        d.put(from[1], "start date: " + trip.getStart_date());
+        d.put(from[2], "end date: " + trip.getEnd_date());
+        d.put(from[3], "price: " + String.valueOf(trip.getPrice()));
+        d.put(from[4], "min people: " + String.valueOf(trip.getPeople_min()));
+        d.put(from[5], "max people: " + String.valueOf(trip.getPeople_max()));
         data.add(d);
     }
 
@@ -142,7 +139,9 @@ public class menu_Activity extends AppCompatActivity {
 
         //clean old search
         data.remove();
-        tripsets = null;
+        ArrayList<TripSet> tripsets;
+
+        tripsets = TripDB.searchBySubtitle("波蘭");
         /*
          *get data through db
          * tripsets = ;
@@ -150,8 +149,8 @@ public class menu_Activity extends AppCompatActivity {
 
         //show new search
 
-        for(int i = 0; i < 10; i++)
-            renewList(/*tripset[i]*/);
+        for(int i = 0 ; i < tripsets.size() ; i++)
+            renewList(tripsets.get(i));
         adapter.notifyDataSetChanged();
     }
 

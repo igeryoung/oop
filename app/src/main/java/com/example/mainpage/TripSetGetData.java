@@ -87,8 +87,8 @@ public class TripSetGetData {
         SQLiteDatabase db = dbService.getReadableDatabase();
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select distinct * from " + TripSet.DATABASE_TABLE + " where " + TripSet.KEY_TI +
-                                    " LIKE '%?%' OR " + TripSet.KEY_TCN + " LIKE '%?%'", new String[]{target, target});
+        Cursor cursor = db.rawQuery("select * from " + TripSet.DATABASE_TABLE + " where " + TripSet.KEY_TI +
+                                    " LIKE ? OR " + TripSet.KEY_TCN + " LIKE ?", new String[]{"%" + target + "%", "%" + target + "%"});
 
         if (cursor.moveToFirst()) {
             do {
