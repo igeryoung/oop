@@ -54,14 +54,21 @@ public class select_Activity extends AppCompatActivity {
         String input_adult = text_adult.getText().toString();
         EditText text_baby = findViewById(R.id.input_baby);
         String input_baby = text_baby.getText().toString();
-        EditText text_id = findViewById(R.id.input_id);
-        CID = Integer.parseInt(text_id.getText().toString());
 
-        //empty id exception
+        EditText text_id = findViewById(R.id.input_id);
         if(text_id.getText().length() == 0){
             Toast.makeText(select_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(isInteger(text_id.getText().toString()) == false){
+            Toast.makeText(select_Activity.this, "please enter a number as costumer id", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        CID = Integer.parseInt(text_id.getText().toString());
+
+        //empty id exception
+
 
         try {
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {

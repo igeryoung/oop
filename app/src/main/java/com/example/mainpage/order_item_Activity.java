@@ -17,7 +17,7 @@ public class order_item_Activity extends AppCompatActivity {
     private OrderGetData OrderDB;
     private TripSet tripset;
     private int[] order_num = {0,0,0};
-    private int order_id;
+    private int old_order_num;
 
 
     public order_item_Activity() throws IOException {
@@ -44,6 +44,7 @@ public class order_item_Activity extends AppCompatActivity {
 
         //get order and init view
         order = new CostumerOrder(info);
+        old_order_num = order.getAdult() + order.getChild() + order.getBaby();
         tripset = TripDB.getCertain(order.getTitle() , order.getStart_date() , order.getEnd_date()).get(0);
         showInfo();
     }
@@ -71,13 +72,6 @@ public class order_item_Activity extends AppCompatActivity {
         String input_adult = text_adult.getText().toString();
         EditText text_baby = findViewById(R.id.input_baby);
         String input_baby = text_baby.getText().toString();
-        EditText text_id = findViewById(R.id.input_id);
-        order_id = Integer.parseInt(text_id.getText().toString());
-
-        if(text_id.getText().length() == 0){
-            Toast.makeText(order_item_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         try {
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {
@@ -86,18 +80,17 @@ public class order_item_Activity extends AppCompatActivity {
             order_num[0] = Integer.parseInt(input_old);
             order_num[1] = Integer.parseInt(input_adult);
             order_num[2] = Integer.parseInt(input_baby);
-            System.out.println(""+order_num[0] + "," + order_num[1] + "," + order_num[2] );
+            System.out.println( "" + order_num[0] + order_num[1] + order_num[2]);
             int total = order_num[0] + order_num[1] + order_num[2];
-            finish();
+            System.out.println( "" + tripset.getPeople_max() + "~" + tripset.getPeople_min());
             if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){
                 Toast.makeText(order_item_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{
                 //all exception pass and update data
-                int price_total = tripset.getPrice() * total;
-                CostumerOrder final_order = new CostumerOrder(0 , order_id , order_num[0] , order_num[1] , order_num[2] , price_total,
-                        tripset.getTitle() , tripset.getStart_date() , tripset.getEnd_date());
-                OrderDB.insert(final_order);
+                System.out.println("pass and ready to update");
+                TripDB.updateTripSet(order.getTitle() , order.getStart_date() , order.getEnd_date() , old_order_num - total);
+                int err = OrderDB.modifyOrderPeople(order.getCostumerId() , order.getOrderId() , order_num[0] ,  order_num[1] , order_num[2]);
                 finish();
             }
 

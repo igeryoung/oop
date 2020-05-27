@@ -109,7 +109,7 @@ public class menu_Activity extends AppCompatActivity {
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
         listView.setAdapter(adapter);
-        for(int i=0 ; i< 20 ; i++){
+        for(int i=0 ; i< list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
             d.put(from[1], "start date: " + list.get(i).getStart_date());
