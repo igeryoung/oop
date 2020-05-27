@@ -23,9 +23,9 @@ public class MyOrderActivity extends AppCompatActivity {
             R.id.order_end_date, R.id.order_people_adult, R.id.order_people_child , R.id.order_people_baby , R.id.order_price};
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
-    OrderGetData OrderDB;
+    private OrderGetData OrderDB;
     int CID;
-    ArrayList<CostumerOrder> list;
+    private ArrayList<CostumerOrder> list;
     int position = -1;
 
 
@@ -58,6 +58,7 @@ public class MyOrderActivity extends AppCompatActivity {
                 Toast.makeText(MyOrderActivity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
 
                 String select_info = list.get(pos).allToString();
+                System.out.println("In MyOrderActivity select_info is " + select_info);
                 Intent next_page = new Intent(MyOrderActivity.this , order_item_Activity.class );
                 next_page.putExtra("info" , select_info);
                 startActivityForResult(next_page , 0);

@@ -67,7 +67,7 @@ public class OrderGetData {
 
     public ArrayList<CostumerOrder> getOrderByCI(int costumerId){
         SQLiteDatabase db = dbService.getReadableDatabase();
-        String selectQuery =  "SELECT  " +
+        String selectQuery =  "SELECT " +
                 CostumerOrder.KEY_OI + "," +
                 CostumerOrder.KEY_CI + "," +
                 CostumerOrder.KEY_AD + "," +
@@ -78,7 +78,7 @@ public class OrderGetData {
                 " WHERE " + "costumerId=?";
 
         ArrayList<CostumerOrder> CostumerOrderList = new ArrayList<>();
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(costumerId)});
+        Cursor cursor = db.rawQuery("select * from " + CostumerOrder.DATABASE_TABLE + " where costumerId=?", new String[]{String.valueOf(costumerId)});
 
         if (cursor.moveToFirst()) {
             do {

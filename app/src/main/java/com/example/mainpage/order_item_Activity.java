@@ -39,7 +39,7 @@ public class order_item_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_order_item_);
         //init
         Intent intent = getIntent();
-        String info = intent.getStringExtra("order");
+        String info = intent.getStringExtra("info");
         System.out.println(info);
 
         //get order and init view
