@@ -67,15 +67,6 @@ public class OrderGetData {
 
     public ArrayList<CostumerOrder> getOrderByCI(int costumerId){
         SQLiteDatabase db = dbService.getReadableDatabase();
-        String selectQuery =  "SELECT " +
-                CostumerOrder.KEY_OI + "," +
-                CostumerOrder.KEY_CI + "," +
-                CostumerOrder.KEY_AD + "," +
-                CostumerOrder.KEY_CH + "," +
-                CostumerOrder.KEY_BA + "," +
-                CostumerOrder.KEY_PR +
-                " FROM " + CostumerOrder.DATABASE_TABLE +
-                " WHERE " + "costumerId=?";
 
         ArrayList<CostumerOrder> CostumerOrderList = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from " + CostumerOrder.DATABASE_TABLE + " where costumerId=?", new String[]{String.valueOf(costumerId)});
@@ -103,18 +94,9 @@ public class OrderGetData {
 
     public ArrayList<CostumerOrder> getOrderByOI(int orderId){
         SQLiteDatabase db = dbService.getReadableDatabase();
-        String selectQuery =  "SELECT  " +
-                CostumerOrder.KEY_OI + "," +
-                CostumerOrder.KEY_CI + "," +
-                CostumerOrder.KEY_AD + "," +
-                CostumerOrder.KEY_CH + "," +
-                CostumerOrder.KEY_BA + "," +
-                CostumerOrder.KEY_PR +
-                " FROM " + CostumerOrder.DATABASE_TABLE +
-                " WHERE " + "orderId=?";
 
         ArrayList<CostumerOrder> CostumerOrderList = new ArrayList<>();
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(orderId)});
+        Cursor cursor = db.rawQuery("select * from " + CostumerOrder.DATABASE_TABLE + " where orderId=?", new String[]{String.valueOf(orderId)});
 
         if (cursor.moveToFirst()) {
             do {
