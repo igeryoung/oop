@@ -14,7 +14,7 @@ import java.io.IOException;
 public class select_Activity extends AppCompatActivity {
     private TripSet tripset;
     private int[] order = {0,0,0};
-    private int order_id;
+    private int CID;
     private OrderGetData OrderDB;
 
     public select_Activity() throws IOException {
@@ -55,7 +55,7 @@ public class select_Activity extends AppCompatActivity {
         EditText text_baby = findViewById(R.id.input_baby);
         String input_baby = text_baby.getText().toString();
         EditText text_id = findViewById(R.id.input_id);
-        order_id = Integer.parseInt(text_id.getText().toString());
+        CID = Integer.parseInt(text_id.getText().toString());
 
         //empty id exception
         if(text_id.getText().length() == 0){
@@ -79,9 +79,10 @@ public class select_Activity extends AppCompatActivity {
                 return;
             }else{
                 //pass all exception and make an order
-                CostumerOrder final_order = new CostumerOrder(0 , order_id , order[0] , order[1] , order[2] , price_total,
+                CostumerOrder final_order = new CostumerOrder( CID , 0, order[0] , order[1] , order[2] , price_total,
                 tripset.getTitle() , tripset.getStart_date() , tripset.getEnd_date());
-                OrderDB.insert(final_order);
+                int number = OrderDB.insert(final_order);
+                System.out.println("Order# = " + number);
                 finish();
             }
 

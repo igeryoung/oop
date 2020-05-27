@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent" >
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,21 +17,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="title"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
     <TextView
         android:gravity="center_horizontal"
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="date"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
     <TextView
         android:gravity="center_horizontal"
         android:id="@+id/people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="people"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
     <TextView
 
         android:gravity="center_horizontal"
@@ -37,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="price per person"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,27 +56,27 @@
                 android:layout_height="wrap_content"
                 android:text="更改 : "
                 android:layout_marginLeft="30dp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="成人 "
 
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#"
                 android:id="@+id/adult_num"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <EditText
                 android:id="@+id/input_old"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:layout_width="100dp"
                 android:inputType="textFilter"
                 />
@@ -91,20 +93,20 @@
                 android:layout_height="wrap_content"
                 android:text="小孩 "
                 android:layout_marginLeft="140dp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#"
                 android:id="@+id/child_num"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <EditText
                 android:id="@+id/input_adult"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30sp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:layout_width="100dp"
                 android:inputType="textFilter"
                 />
@@ -120,20 +122,20 @@
                 android:layout_height="wrap_content"
                 android:text="嬰兒 "
                 android:layout_marginLeft="140dp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#"
                 android:id="@+id/baby_num"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 />
             <EditText
                 android:id="@+id/input_baby"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:layout_width="100dp"
                 android:inputType="textFilter"
                 />
@@ -150,7 +152,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="80dp"
             android:text="確定"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:onClick="certain"
             />
 
@@ -160,11 +162,12 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:text="取消"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:onClick="cancel"
             />
     </LinearLayout>
 
 
 </LinearLayout>
+</ScrollView>
 

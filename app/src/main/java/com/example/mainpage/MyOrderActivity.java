@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -21,7 +23,19 @@ public class MyOrderActivity extends AppCompatActivity {
             R.id.order_end_date, R.id.order_people_adult, R.id.order_people_child , R.id.order_people_baby , R.id.order_price};
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
-    TripSet[] tripsets;
+    OrderGetData OrderDB;
+    int CID;
+    ArrayList<CostumerOrder> list;
+    int position = -1;
+
+
+    public MyOrderActivity() throws IOException {
+        new Thread(){
+            public void run(){
+                OrderDB = new OrderGetData((MyOrderActivity.this));
+            }
+        }.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +45,7 @@ public class MyOrderActivity extends AppCompatActivity {
         //get msg
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
+        CID = Integer.parseInt(id);
         System.out.println(id);
         //create list
         listView = findViewById(R.id.order_list);
@@ -39,28 +54,38 @@ public class MyOrderActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                position = pos;
+                Toast.makeText(MyOrderActivity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
 
-                //data in tripset[i]
-                //select_info = tripsets[pos].allToString();
-
-                String select_info = "title,100,date1,date2,10,10,100,1000,20"/*20 is id*/;
-                System.out.println("ready to intent");
+                String select_info = list.get(pos).allToString();
                 Intent next_page = new Intent(MyOrderActivity.this , order_item_Activity.class );
-                next_page.putExtra("order" , select_info);
-                //startActivity(next_page);
-                startActivityForResult(next_page , 1);
+                next_page.putExtra("info" , select_info);
+                startActivityForResult(next_page , 0);
             }
         });
     }
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.order_layout, from , to);
         listView.setAdapter(adapter);
-        HashMap<String , String> d = new HashMap<>();
-        for(int k = 0; k < 20 ; k++){
-            for(int i = 0; i < 8 ; i++){
-                d.put(from[i] , from[i]);
-            }
+
+        list = OrderDB.getOrderByCI(CID);
+        for(int i = 0; i < list.size() ; i++){
+            HashMap<String , String> d = new HashMap<>();
+            d.put(from[0], "title: " + list.get(i).getTitle());
+            d.put(from[1], "code: " + list.get(i).getOrderId());
+            d.put(from[2], "start date: " + list.get(i).getStart_date());
+            d.put(from[3], "end date: " + list.get(i).getEnd_date());
+            d.put(from[4], "adult: " + list.get(i).getAdult());
+            d.put(from[5], "child: " + list.get(i).getChild());
+            d.put(from[6], "baby: " + list.get(i).getBaby());
+            d.put(from[7], "price: " + list.get(i).getPrice());
             data.add(d);
         }
     }
+
+    public void finish(){
+        setResult(-1000);
+        super.finish();
+    }
+
 }

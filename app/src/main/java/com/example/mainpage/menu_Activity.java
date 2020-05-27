@@ -86,9 +86,16 @@ public class menu_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
         super.onActivityResult(requestCode, resultCode, data2);
+        if(resultCode == -1000){
+            return;
+        }
         System.out.println("order = "+ resultCode);
         TripSet target = list.get(position);
-        TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , requestCode * -1);
+
+        int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode * -1);
+        if(err == -1 ){
+            System.out.println("update err!!!");
+        }
         position = -1;
 
         EditText text = findViewById(R.id.text_input);
@@ -97,6 +104,7 @@ public class menu_Activity extends AppCompatActivity {
         list = TripDB.searchBySubtitle(input);
         renewList();
     }
+
     //list create
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
