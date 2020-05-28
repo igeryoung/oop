@@ -51,7 +51,7 @@ public class TripSetGetData {
                 " LIMIT " + String.valueOf(amount);
 
         ArrayList<TripSet> TripSetList = new ArrayList<>();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery("select * from " + TripSet.DATABASE_TABLE + " limit ?", new String[]{String.valueOf(amount)});
 
         if (cursor.moveToFirst()) {
             do {

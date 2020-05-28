@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class TripDB extends SQLiteOpenHelper {
-    private final static int _DBVersion = 16; //<-- version
+    private final static int _DBVersion = 17; //<-- version
     private final static String _DBName = "tripSet.db";  //<-- db name
     private Context context;
 
