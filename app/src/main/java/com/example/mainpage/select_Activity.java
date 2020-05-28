@@ -49,6 +49,8 @@ public class select_Activity extends AppCompatActivity {
         people.setText("min : " + tripset.getPeople_min() + " max : " + tripset.getPeople_max());
         TextView price = findViewById(R.id.price);
         price.setText("price : " + tripset.getPrice());
+        TextView order_amount = findViewById(R.id.oder_amount);
+        order_amount.setText("" + tripset.getOrder_amount());
     }
 
     public void certain(View view) {
@@ -58,14 +60,20 @@ public class select_Activity extends AppCompatActivity {
         String input_adult = text_adult.getText().toString();
         EditText text_baby = findViewById(R.id.input_baby);
         String input_baby = text_baby.getText().toString();
-        EditText text_id = findViewById(R.id.input_id);
-        CID = Integer.parseInt(text_id.getText().toString());
 
-        //empty id exception
+        EditText text_id = findViewById(R.id.input_id);
         if(text_id.getText().length() == 0){
             Toast.makeText(select_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(isInteger(text_id.getText().toString()) == false){
+            Toast.makeText(select_Activity.this, "please enter a number as costumer id", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        CID = Integer.parseInt(text_id.getText().toString());
+
+        //empty id exception
 
         try {
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {
@@ -78,7 +86,8 @@ public class select_Activity extends AppCompatActivity {
             System.out.println(""+order[0] + "," + order[1] + "," + order[2] );
             int total = order[0] + order[1] + order[2];
             int price_total = tripset.getPrice() * total;
-            if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){
+
+            if(total + tripset.getOrder_amount() > tripset.getPeople_max() || total  + tripset.getOrder_amount() < tripset.getPeople_min()){
                 Toast.makeText(select_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{

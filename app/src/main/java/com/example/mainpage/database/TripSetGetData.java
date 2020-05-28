@@ -45,7 +45,8 @@ public class TripSetGetData {
                 TripSet.KEY_P_min + "," +
                 TripSet.KEY_P_max + "," +
                 TripSet.KEY_TC + "," +
-                TripSet.KEY_TCN +
+                TripSet.KEY_TCN + "," +
+                TripSet.KEY_OP +
                 " FROM " + TripSet.DATABASE_TABLE +
                 " LIMIT " + String.valueOf(amount);
 
@@ -61,8 +62,9 @@ public class TripSetGetData {
                                     cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
                                     cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
                                     cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
-                                    cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
-                                     );
+                                    cursor.getString(cursor.getColumnIndex(TripSet.KEY_TCN)),
+                                    cursor.getInt(cursor.getColumnIndex(TripSet.KEY_OP))
+                                    );
                 TripSetList.add(checkpoint);
             } while (cursor.moveToNext());
         }
@@ -88,7 +90,8 @@ public class TripSetGetData {
                         cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
                         cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
                         cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
-                        cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
+                        cursor.getString(cursor.getColumnIndex(TripSet.KEY_TCN)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_OP))
                 );
                 TripSetList.add(checkpoint);
             } while (cursor.moveToNext());
@@ -110,14 +113,15 @@ public class TripSetGetData {
         if(cursor.moveToFirst()){
             do{
                 TripSet checkpoint = new TripSet(cursor.getString(cursor.getColumnIndex(TripSet.KEY_TI)),
-                                                cursor.getString(cursor.getColumnIndex(TripSet.KEY_SD)),
-                                                cursor.getString(cursor.getColumnIndex(TripSet.KEY_ED)),
-                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_PR)),
-                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
-                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
-                                                cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
-                                                cursor.getString((cursor.getColumnIndex(TripSet.KEY_TCN)))
-                                                );
+                        cursor.getString(cursor.getColumnIndex(TripSet.KEY_SD)),
+                        cursor.getString(cursor.getColumnIndex(TripSet.KEY_ED)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_PR)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_min)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_P_max)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_TC)),
+                        cursor.getString(cursor.getColumnIndex(TripSet.KEY_TCN)),
+                        cursor.getInt(cursor.getColumnIndex(TripSet.KEY_OP))
+                );
                 TripSetList.add(checkpoint);
             }
             while (cursor.moveToNext());
@@ -136,8 +140,8 @@ public class TripSetGetData {
         else{
             SQLiteDatabase db = dbService.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put("people_max", String.valueOf(list.get(0).getPeople_max() + amount));
-            values.put("people_min", String.valueOf(list.get(0).getPeople_min() + amount));
+
+            values.put("order_amount", String.valueOf(list.get(0).getOrder_amount() + amount));
             db.update(TripSet.DATABASE_TABLE, values, "title=? AND start_date=? AND end_date=?", new String[]{title, start_date, end_date});
             db.close();
             return 1;

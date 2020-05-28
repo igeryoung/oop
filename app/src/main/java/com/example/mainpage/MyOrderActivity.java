@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class MyOrderActivity extends AppCompatActivity {
     int position = -1;
 
 
-    public MyOrderActivity() throws IOException {
+    public MyOrderActivity() {
         new Thread(){
             public void run(){
                 OrderDB = new OrderGetData((MyOrderActivity.this));
@@ -68,6 +69,28 @@ public class MyOrderActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
+        super.onActivityResult(requestCode, resultCode, data2);
+        if(resultCode == -1000){
+            return;
+        }
+        System.out.println("order = "+ resultCode);
+        TripSet target = list.get(position);
+
+        int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode * -1);
+        if(err == -1 ){
+            System.out.println("update err!!!");
+        }
+        position = -1;
+
+        EditText text = findViewById(R.id.text_input);
+        String input = text.getText().toString();
+        data.clear();
+        list = TripDB.searchBySubtitle(input);
+        renewList();
+    }*/
+
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.order_layout, from , to);
         listView.setAdapter(adapter);

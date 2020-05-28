@@ -13,6 +13,7 @@ public class TripSet {
     public static final String KEY_P_max = "people_max";
     public static final String KEY_TC = "travel_code";
     public static final String KEY_TCN = "travel_code_name";
+    public static final String KEY_OP = "order_amount";
 
     private String title;
     private String start_date;
@@ -22,8 +23,10 @@ public class TripSet {
     private int people_max;
     private int travel_code;
     private String travel_code_name;
+    private int order_amount = 0;
 
-    public TripSet(String title, String start_date, String end_date, int price, int people_min, int people_max, int travel_code, String travel_code_name) {
+    public TripSet(String title, String start_date, String end_date, int price, int people_min,
+                   int people_max, int travel_code, String travel_code_name, int order_amount) {
         this.title = title;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -32,6 +35,7 @@ public class TripSet {
         this.people_max = people_max;
         this.travel_code = travel_code;
         this.travel_code_name = travel_code_name;
+       this.order_amount = order_amount;
     }
 
     public TripSet (String info) {
@@ -42,6 +46,7 @@ public class TripSet {
         this.price = Integer.parseInt(tokens[3]);
         this.people_min = Integer.parseInt(tokens[4]);
         this.people_max = Integer.parseInt(tokens[5]);
+        this.order_amount = Integer.parseInt(tokens[6]);
     }
 
     public String getTitle() {
@@ -100,6 +105,14 @@ public class TripSet {
 
     public void setTravel_code_name(String travel_code_name) { this.travel_code_name = travel_code_name; }
 
+    public int getOrder_amount() {
+        return order_amount;
+    }
+
+    public void setOrder_amount(int order_amount) {
+        this.order_amount = order_amount;
+    }
+
     public String allToString(){
         String info = title;
         info += "," + start_date;
@@ -107,6 +120,7 @@ public class TripSet {
         info += "," + price;
         info += "," + people_min;
         info += "," + people_max;
+        info += "," + order_amount;
         return info;
     }
 
