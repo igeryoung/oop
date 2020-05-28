@@ -43,7 +43,7 @@ public class menu_Activity extends AppCompatActivity {
     private ArrayList<TripSet> list;
     private int position = -1;
 
-    public menu_Activity() throws IOException {
+    public menu_Activity() {
         new Thread(){
             public void run(){
                 try {
@@ -70,11 +70,6 @@ public class menu_Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 position = pos;
                 Toast.makeText(menu_Activity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
-                if(list.get(pos).getPeople_max() == 0){
-                    Toast.makeText(menu_Activity.this, "機位已售罄" + pos, Toast.LENGTH_SHORT).show();
-                    position = -1;
-                    return;
-                }
 
                 String select_info = list.get(pos).allToString();
                 Intent next_page = new Intent(menu_Activity.this , select_Activity.class );
@@ -92,7 +87,7 @@ public class menu_Activity extends AppCompatActivity {
         System.out.println("order = "+ resultCode);
         TripSet target = list.get(position);
 
-        int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode * -1);
+        int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode);
         if(err == -1 ){
             System.out.println("update err!!!");
         }
@@ -114,9 +109,9 @@ public class menu_Activity extends AppCompatActivity {
             d.put(from[0], "title: " + list.get(i).getTitle());
             d.put(from[1], "start date: " + list.get(i).getStart_date());
             d.put(from[2], "end date: " + list.get(i).getEnd_date());
-            d.put(from[3], "price: " + String.valueOf(list.get(i).getPrice()));
-            d.put(from[4], "min people: " + String.valueOf(list.get(i).getPeople_min()));
-            d.put(from[5], "max people: " + String.valueOf(list.get(i).getPeople_max()));
+            d.put(from[3], "price: " + list.get(i).getPrice());
+            d.put(from[4], "min people: " + list.get(i).getPeople_min());
+            d.put(from[5], "max people: " + list.get(i).getPeople_max());
             data.add(d);
         }
     }
@@ -168,9 +163,5 @@ public class menu_Activity extends AppCompatActivity {
                     }
                 })
                 .show();
-
-    }
-
-    private void setToast(String toString) {
     }
 }

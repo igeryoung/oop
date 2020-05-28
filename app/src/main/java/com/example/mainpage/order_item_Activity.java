@@ -18,7 +18,7 @@ public class order_item_Activity extends AppCompatActivity {
     private TripSet tripset;
     private int[] order_num = {0,0,0};
     private int old_order_num;
-
+    private int remain;
 
     public order_item_Activity() throws IOException {
         new Thread(){
@@ -46,6 +46,7 @@ public class order_item_Activity extends AppCompatActivity {
         order = new CostumerOrder(info);
         old_order_num = order.getAdult() + order.getChild() + order.getBaby();
         tripset = TripDB.getCertain(order.getTitle() , order.getStart_date() , order.getEnd_date()).get(0);
+        remain = tripset.getOrder_amount() - old_order_num;
         showInfo();
     }
 
@@ -56,6 +57,10 @@ public class order_item_Activity extends AppCompatActivity {
         date.setText("from : " + order.getStart_date() + " to : " + order.getEnd_date());
         TextView price = findViewById(R.id.price);
         price.setText("price : " + order.getPrice());
+        TextView people = findViewById(R.id.people);
+        people.setText("people : " + tripset.getPeople_min() + "~" + tripset.getPeople_max());
+        TextView order_amount = findViewById(R.id.oder_amount);
+        order_amount.setText("" + remain);
 
         TextView adult_num = findViewById(R.id.adult_num);
         adult_num.setText(""+ order.getAdult());
@@ -83,14 +88,20 @@ public class order_item_Activity extends AppCompatActivity {
             System.out.println( "" + order_num[0] + order_num[1] + order_num[2]);
             int total = order_num[0] + order_num[1] + order_num[2];
             System.out.println( "" + tripset.getPeople_max() + "~" + tripset.getPeople_min());
-            if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){
+            if(total + remain > tripset.getPeople_max() || total + remain < tripset.getPeople_min()){
                 Toast.makeText(order_item_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{
                 //all exception pass and update data
                 System.out.println("pass and ready to update");
-                TripDB.updateTripSet(order.getTitle() , order.getStart_date() , order.getEnd_date() , old_order_num - total);
-                int err = OrderDB.modifyOrderPeople(order.getCostumerId() , order.getOrderId() , order_num[0] ,  order_num[1] , order_num[2]);
+                TripDB.updateTripSet(order.getTitle() , order.getStart_date() , order.getEnd_date() , total - old_order_num);
+
+                System.out.println(order.getCostumerId() + ", " + order.getOrderId() + ", " + (order_num[0] - order.getAdult()));
+
+                int err = OrderDB.modifyOrderPeople(order.getCostumerId() , order.getOrderId() ,
+                        order_num[0] - order.getAdult(),  order_num[1] - order.getChild(), order_num[2] - order.getBaby());
+
+
                 finish();
             }
 

@@ -45,6 +45,8 @@ public class select_Activity extends AppCompatActivity {
         people.setText("min : " + tripset.getPeople_min() + " max : " + tripset.getPeople_max());
         TextView price = findViewById(R.id.price);
         price.setText("price : " + tripset.getPrice());
+        TextView order_amount = findViewById(R.id.oder_amount);
+        order_amount.setText("" + tripset.getOrder_amount());
     }
 
     public void certain(View view) {
@@ -69,7 +71,6 @@ public class select_Activity extends AppCompatActivity {
 
         //empty id exception
 
-
         try {
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {
                 throw new Exception();
@@ -81,7 +82,8 @@ public class select_Activity extends AppCompatActivity {
             System.out.println(""+order[0] + "," + order[1] + "," + order[2] );
             int total = order[0] + order[1] + order[2];
             int price_total = tripset.getPrice() * total;
-            if(total > tripset.getPeople_max() || total < tripset.getPeople_min()){
+
+            if(total + tripset.getOrder_amount() > tripset.getPeople_max() || total  + tripset.getOrder_amount() < tripset.getPeople_min()){
                 Toast.makeText(select_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
             }else{

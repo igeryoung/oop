@@ -40,7 +40,8 @@ public class TripDB extends SQLiteOpenHelper {
                             + TripSet.KEY_P_max + " INTEGER, "
                             + TripSet.KEY_P_min + " INTEGER, "
                             + TripSet.KEY_TC + " INTEGER, "
-                            + TripSet.KEY_TCN + " TEXT )";
+                            + TripSet.KEY_TCN + " TEXT, "
+                            + TripSet.KEY_OP + " INTEGER) ";
         db.execSQL(SQL);
         //new readFile().execute(this);
         try {
@@ -63,6 +64,7 @@ public class TripDB extends SQLiteOpenHelper {
                 values.put(TripSet.KEY_P_max, Integer.parseInt(row[7]));
                 values.put(TripSet.KEY_TC, Integer.parseInt(row[1]));
                 values.put(TripSet.KEY_TCN, "");
+                values.put(TripSet.KEY_OP, 0);
 
                 // Inserting Row
                 db.insert(TripSet.DATABASE_TABLE, null, values);

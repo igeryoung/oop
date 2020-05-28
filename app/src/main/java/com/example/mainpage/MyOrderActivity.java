@@ -30,7 +30,7 @@ public class MyOrderActivity extends AppCompatActivity {
     int position = -1;
 
 
-    public MyOrderActivity() throws IOException {
+    public MyOrderActivity() {
         new Thread(){
             public void run(){
                 OrderDB = new OrderGetData((MyOrderActivity.this));

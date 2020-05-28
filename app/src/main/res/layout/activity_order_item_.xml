@@ -44,6 +44,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="除了您已有 "
+            android:textSize="30dp"
+            android:layout_marginLeft="10dp"
+            ></TextView>
+        <TextView
+            android:id="@+id/oder_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="30dp"
+            ></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 人訂購此行程"
+            android:textSize="30dp"
+            ></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
         <LinearLayout
