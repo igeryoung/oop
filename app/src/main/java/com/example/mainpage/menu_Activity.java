@@ -78,6 +78,11 @@ public class menu_Activity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
         super.onActivityResult(requestCode, resultCode, data2);
         if(resultCode == -1000){
+            EditText text = findViewById(R.id.text_input);
+            String input = text.getText().toString();
+            data.clear();
+            list = TripDB.searchBySubtitle(input);
+            renewList();
             return;
         }
         System.out.println("order = "+ resultCode);

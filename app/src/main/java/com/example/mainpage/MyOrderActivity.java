@@ -70,26 +70,25 @@ public class MyOrderActivity extends AppCompatActivity {
         });
     }
 
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
-        super.onActivityResult(requestCode, resultCode, data2);
-        if(resultCode == -1000){
-            return;
-        }
-        System.out.println("order = "+ resultCode);
-        TripSet target = list.get(position);
-
-        int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode * -1);
-        if(err == -1 ){
-            System.out.println("update err!!!");
-        }
-        position = -1;
-
-        EditText text = findViewById(R.id.text_input);
-        String input = text.getText().toString();
+    @Override
+    protected void onResume() {
         data.clear();
-        list = TripDB.searchBySubtitle(input);
-        renewList();
-    }*/
+        list = OrderDB.getOrderByCI(CID);
+        for(int i = 0; i < list.size() ; i++){
+            HashMap<String , String> d = new HashMap<>();
+            d.put(from[0], "title: " + list.get(i).getTitle());
+            d.put(from[1], "code: " + list.get(i).getOrderId());
+            d.put(from[2], "start date: " + list.get(i).getStart_date());
+            d.put(from[3], "end date: " + list.get(i).getEnd_date());
+            d.put(from[4], "adult: " + list.get(i).getAdult());
+            d.put(from[5], "child: " + list.get(i).getChild());
+            d.put(from[6], "baby: " + list.get(i).getBaby());
+            d.put(from[7], "price: " + list.get(i).getPrice());
+            data.add(d);
+        }
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
 
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.order_layout, from , to);

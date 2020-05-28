@@ -106,7 +106,6 @@ public class order_item_Activity extends AppCompatActivity {
                 int err = OrderDB.modifyOrderPeople(order.getCostumerId() , order.getOrderId() ,
                         order_num[0] - order.getAdult(),  order_num[1] - order.getChild(), order_num[2] - order.getBaby());
 
-
                 finish();
             }
 
@@ -130,6 +129,12 @@ public class order_item_Activity extends AppCompatActivity {
         }
         // only got here if we didn't return false
         return true;
+    }
+
+    public void delete(View view){
+        TripDB.updateTripSet(order.getTitle() , order.getStart_date() , order.getEnd_date() , old_order_num * -1);
+        OrderDB.cancelOrder(order.getCostumerId() , order.getOrderId());
+        finish();
     }
 
     @Override
