@@ -9,6 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mainpage.database.OrderGetData;
+import com.example.mainpage.database.TripSetGetData;
+import com.example.mainpage.model.CostumerOrder;
+import com.example.mainpage.model.TripSet;
+
 import java.io.IOException;
 
 public class order_item_Activity extends AppCompatActivity {

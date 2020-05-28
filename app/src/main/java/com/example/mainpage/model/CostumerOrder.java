@@ -1,4 +1,4 @@
-package com.example.mainpage;
+package com.example.mainpage.model;
 
 public class CostumerOrder {
     public  static final String DATABASE_TABLE = "ORDER_TABLE";

@@ -1,14 +1,15 @@
-package com.example.mainpage;
+package com.example.mainpage.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.mainpage.model.TripSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;

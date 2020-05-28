@@ -1,8 +1,10 @@
-package com.example.mainpage;
+package com.example.mainpage.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.mainpage.model.CostumerOrder;
 
 public class OrderDB extends SQLiteOpenHelper {
     private final static int _DBVersion = 1; //<-- version

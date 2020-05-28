@@ -1,4 +1,4 @@
-package com.example.mainpage;
+package com.example.mainpage.model;
 
 import android.telephony.mbms.StreamingServiceInfo;
 

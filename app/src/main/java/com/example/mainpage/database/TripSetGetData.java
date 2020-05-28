@@ -1,25 +1,14 @@
-package com.example.mainpage;
+package com.example.mainpage.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
+import com.example.mainpage.model.TripSet;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import static android.os.Build.VERSION_CODES.KITKAT;
 
 public class TripSetGetData {
     private TripDB dbService;
