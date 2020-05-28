@@ -96,7 +96,7 @@ public class select_Activity extends AppCompatActivity {
                 tripset.getTitle() , tripset.getStart_date() , tripset.getEnd_date());
                 int number = OrderDB.insert(final_order);
                 System.out.println("Order# = " + number);
-                finish();
+                Cfinish();
             }
 
         }catch (Exception e){
@@ -109,8 +109,8 @@ public class select_Activity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public void finish(){
+
+    public void Cfinish(){
         setResult(order[0] + order[1] + order[2]);
 
         //add this order to database
