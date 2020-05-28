@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">mainpage</string>
     <string name="start">開始行程!</string>
+    <string name="cover">cover</string>
 </resources>
