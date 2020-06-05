@@ -90,6 +90,10 @@ public class order_item_Activity extends AppCompatActivity {
             order_num[0] = Integer.parseInt(input_old);
             order_num[1] = Integer.parseInt(input_adult);
             order_num[2] = Integer.parseInt(input_baby);
+            if(order_num[0] < 0 || order_num[1] < 0 || order_num[2] < 0){
+                Toast.makeText(order_item_Activity.this, "please enter non-negative number in order", Toast.LENGTH_SHORT).show();
+                return;
+            }
             System.out.println( "" + order_num[0] + order_num[1] + order_num[2]);
             int total = order_num[0] + order_num[1] + order_num[2];
             System.out.println( "" + tripset.getPeople_max() + "~" + tripset.getPeople_min());

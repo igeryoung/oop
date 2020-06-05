@@ -72,7 +72,10 @@ public class select_Activity extends AppCompatActivity {
         }
 
         CID = Integer.parseInt(text_id.getText().toString());
-
+        if(CID <= 0){
+            Toast.makeText(select_Activity.this, "please enter a number larger than 0 as costumer id", Toast.LENGTH_SHORT).show();
+            return;
+        }
         //empty id exception
 
         try {
@@ -82,6 +85,11 @@ public class select_Activity extends AppCompatActivity {
             order[0] = Integer.parseInt(input_old);
             order[1] = Integer.parseInt(input_adult);
             order[2] = Integer.parseInt(input_baby);
+
+            if(order[0] < 0 || order[1] < 0 || order[2] < 0){
+                Toast.makeText(select_Activity.this, "please enter non-negative number in order", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             System.out.println(""+order[0] + "," + order[1] + "," + order[2] );
             int total = order[0] + order[1] + order[2];
