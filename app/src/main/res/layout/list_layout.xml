@@ -18,12 +18,17 @@
         android:id="@+id/item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:ellipsize="end"
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#775"
         />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -32,19 +37,25 @@
             android:id="@+id/item_start_date"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:textColor="#DCDCDC"
+            android:textSize="10dp"
             />
         <TextView
             android:id="@+id/item_end_date"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:textColor="#DCDCDC"
+            android:textSize="10dp"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="#775"
         />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
