@@ -23,7 +23,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-
+/*
+* menu page : show the list of trip and provide searching operation
+*       searching operation : searching by subtitle & travel code
+* two button in Activity :
+*       (a) my order : check in account by ID and show the order of it
+*       (b) search : get string in text blank and searching in database
+ */
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class menu_Activity extends AppCompatActivity {
 
@@ -60,13 +66,11 @@ public class menu_Activity extends AppCompatActivity {
         listView = findViewById(R.id.my_list_view);
         initList();
 
-        //Click list event
+        //Click list event : find which position user selected , and change to detail page of selected item ( select_Activity )
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 position = pos;
-                Toast.makeText(menu_Activity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
-
                 String select_info = list.get(pos).allToString();
                 Intent next_page = new Intent(menu_Activity.this , select_Activity.class );
                 next_page.putExtra("info" , select_info);
@@ -74,26 +78,36 @@ public class menu_Activity extends AppCompatActivity {
             }
         });
     }
+    /*
+    *when back to this page , we renew the list information.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data2) {
         super.onActivityResult(requestCode, resultCode, data2);
-        if(resultCode == -1000){
+
+        if(resultCode == -1000){    //back from user_order ( MyOrderActivity )
             EditText text = findViewById(R.id.text_input);
             String input = text.getText().toString();
+
+            //clear old data
             data.clear();
+
+            //set new data
             list = TripDB.searchBySubtitle(input);
             renewList();
             return;
         }
+
+        //back from select_Activity and renew database
         System.out.println("order = "+ resultCode);
         TripSet target = list.get(position);
-
         int err = TripDB.updateTripSet(target.getTitle() , target.getStart_date() , target.getEnd_date() , resultCode);
         if(err == -1 ){
             System.out.println("update err!!!");
         }
-        position = -1;
 
+        //renew current list
+        position = -1;
         EditText text = findViewById(R.id.text_input);
         String input = text.getText().toString();
         data.clear();
@@ -105,6 +119,7 @@ public class menu_Activity extends AppCompatActivity {
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.list_layout, from , to);
         listView.setAdapter(adapter);
+        //put data into list info manager
         for(int i=0 ; i< list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
@@ -116,7 +131,7 @@ public class menu_Activity extends AppCompatActivity {
             data.add(d);
         }
     }
-    //click! search
+    // search : handle click event when search is clicked
     public void search(View v) {
         //get searching input
         EditText text = findViewById(R.id.text_input);
@@ -126,9 +141,12 @@ public class menu_Activity extends AppCompatActivity {
         list = TripDB.searchBySubtitle(input);
         renewList();
     }
+
     //renew the list
     private  void renewList(){
+        //clear old list
         data.clear();
+        //put new data into list info manager
         for(int i=0 ; i< list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
@@ -142,11 +160,12 @@ public class menu_Activity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    // MyOrder : handle click event when MyOrder is clicked
     public void MyOrder(View view) {
-        //init
+        //init AlertDialog
         LayoutInflater inflater = LayoutInflater.from(menu_Activity.this);
         final View v = inflater.inflate(R.layout.alertdialog_layout, null);
-        //ID request and login
+        //show AlertDialog of ID request and login
         new AlertDialog.Builder(menu_Activity.this)
                 .setTitle("請輸入你的id")
                 .setView(v)
@@ -157,7 +176,7 @@ public class menu_Activity extends AppCompatActivity {
                         String id = editText.getText().toString();
                         Toast.makeText(getApplicationContext(), "你的id是" +
                                 id, Toast.LENGTH_SHORT).show();
-                        //跳頁
+                        //jump to MyOrderActivity
                         Intent next_page = new Intent(menu_Activity.this , MyOrderActivity.class );
                         next_page.putExtra("id" , id);
                         startActivityForResult(next_page , 0);

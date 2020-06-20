@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-
+/*
+* start page : only a button for jumping to menu page
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //btn and its click event handler
         Button btn_next = (Button) findViewById(R.id.btn_next);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
