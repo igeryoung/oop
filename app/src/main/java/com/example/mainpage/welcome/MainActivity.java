@@ -1,14 +1,15 @@
-package com.example.mainpage;
+package com.example.mainpage.welcome;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.util.ArrayList;
+import com.example.mainpage.R;
+import com.example.mainpage.allTravel.menu_Activity;
+
 /*
 * start page : only a button for jumping to menu page
  */

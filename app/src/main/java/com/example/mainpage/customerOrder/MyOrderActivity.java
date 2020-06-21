@@ -1,4 +1,4 @@
-package com.example.mainpage;
+package com.example.mainpage.customerOrder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,15 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
+import com.example.mainpage.R;
 import com.example.mainpage.database.OrderGetData;
 import com.example.mainpage.model.CostumerOrder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;

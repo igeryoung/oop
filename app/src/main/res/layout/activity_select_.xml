@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    tools:context=".allTravel.select_Activity"
+    android:background="@drawable/gradient_blue"
+    >
+
+    <RelativeLayout
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    tools:context=".select_Activity"
     android:orientation="vertical"
-    android:background="@drawable/gradient_blue">
+    >
 
     <RelativeLayout
         android:id="@+id/tripset"
@@ -228,36 +234,37 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/order"
-        android:layout_alignLeft="@id/order"
-        android:layout_alignRight="@id/order"
-        >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/order"
+            android:layout_alignLeft="@id/order"
+            android:layout_alignRight="@id/order"
+            android:layout_marginLeft="-5dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginRight="5dp">
 
-        <Button
-            android:id="@+id/certain"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentLeft="true"
-            android:text="確定"
-            android:textSize="25sp"
-            android:onClick="certain"
-            android:background="@drawable/round_button_white"
-            />
+            <Button
+                android:id="@+id/certain"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/round_button_white"
+                android:onClick="certain"
+                android:text="確定"
+                android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentRight="true"
-            android:text="取消"
-            android:textSize="25sp"
-            android:onClick="cancel"
-            android:background="@drawable/round_button_white"
-            />
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/round_button_white"
+                android:onClick="cancel"
+                android:text="取消"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".customerOrder.order_item_Activity"
+    android:background="@drawable/gradient_blue"
+    >
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".order_item_Activity"
-    android:orientation="vertical"
-    android:background="@drawable/gradient_blue"
     >
 
     <RelativeLayout
@@ -247,4 +252,4 @@
     </RelativeLayout>
 
 </RelativeLayout>
-
+</ScrollView>

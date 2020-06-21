@@ -1,4 +1,4 @@
-package com.example.mainpage;
+package com.example.mainpage.allTravel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mainpage.R;
 import com.example.mainpage.database.OrderGetData;
 import com.example.mainpage.model.CostumerOrder;
 import com.example.mainpage.model.TripSet;

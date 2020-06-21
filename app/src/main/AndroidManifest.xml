@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".order_item_Activity"></activity>
-        <activity android:name=".MyOrderActivity" />
-        <activity android:name=".select_Activity" />
-        <activity android:name=".menu_Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".customerOrder.order_item_Activity"></activity>
+        <activity android:name=".customerOrder.MyOrderActivity" />
+        <activity android:name=".allTravel.select_Activity" />
+        <activity android:name=".allTravel.menu_Activity" />
+        <activity android:name=".welcome.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

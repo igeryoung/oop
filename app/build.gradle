@@ -1,9 +1,18 @@
 apply plugin: 'com.android.application'
-
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     defaultConfig {
         applicationId "com.example.mainpage"
         minSdkVersion 16

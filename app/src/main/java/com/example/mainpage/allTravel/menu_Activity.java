@@ -1,4 +1,4 @@
-package com.example.mainpage;
+package com.example.mainpage.allTravel;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.mainpage.customerOrder.MyOrderActivity;
+import com.example.mainpage.R;
 import com.example.mainpage.database.TripSetGetData;
 import com.example.mainpage.model.TripSet;
 
