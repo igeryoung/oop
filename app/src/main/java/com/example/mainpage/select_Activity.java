@@ -55,7 +55,7 @@ public class select_Activity extends AppCompatActivity {
         people.setText("min : " + tripset.getPeople_min() + " max : " + tripset.getPeople_max());
         TextView price = findViewById(R.id.price);
         price.setText("price : " + tripset.getPrice());
-        TextView order_amount = findViewById(R.id.oder_amount);
+        TextView order_amount = findViewById(R.id.order_amount);
         order_amount.setText("" + tripset.getOrder_amount());
     }
 

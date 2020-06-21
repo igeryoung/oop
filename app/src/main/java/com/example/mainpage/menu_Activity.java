@@ -36,8 +36,7 @@ public class menu_Activity extends AppCompatActivity {
     //list arg
     private ListView listView;
     private String[] from = {"title" , "start_date", "end_date", "price", "people_min", "people_max"};
-    private int[] to = {R.id.item_title , R.id.item_start_date, R.id.item_end_date,
-            R.id.item_price, R.id.item_people_min, R.id.item_people_max};
+    private int[] to = {R.id.item_title , R.id.item_start_date, R.id.item_end_date};
     private LinkedList<HashMap<String , String>> data = new LinkedList<>();
     SimpleAdapter adapter;
 
@@ -62,7 +61,7 @@ public class menu_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_);
 
         //set listView
-        list = TripDB.getAll(20);
+        list = TripDB.getAll(500);
         listView = findViewById(R.id.my_list_view);
         initList();
 
@@ -122,12 +121,12 @@ public class menu_Activity extends AppCompatActivity {
         //put data into list info manager
         for(int i=0 ; i< list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
-            d.put(from[0], "title: " + list.get(i).getTitle());
-            d.put(from[1], "start date: " + list.get(i).getStart_date());
-            d.put(from[2], "end date: " + list.get(i).getEnd_date());
-            d.put(from[3], "price: " + list.get(i).getPrice());
-            d.put(from[4], "min people: " + list.get(i).getPeople_min());
-            d.put(from[5], "max people: " + list.get(i).getPeople_max());
+            d.put(from[0], list.get(i).getTitle());
+            d.put(from[1], list.get(i).getStart_date());
+            d.put(from[2], list.get(i).getEnd_date());
+//            d.put(from[3], list.get(i).getPrice());
+//            d.put(from[4], list.get(i).getPeople_min());
+//            d.put(from[5], list.get(i).getPeople_max());
             data.add(d);
         }
     }
@@ -149,12 +148,12 @@ public class menu_Activity extends AppCompatActivity {
         //put new data into list info manager
         for(int i=0 ; i< list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
-            d.put(from[0], "title: " + list.get(i).getTitle());
-            d.put(from[1], "start date: " + list.get(i).getStart_date());
-            d.put(from[2], "end date: " + list.get(i).getEnd_date());
-            d.put(from[3], "price: " + String.valueOf(list.get(i).getPrice()));
-            d.put(from[4], "min people: " + String.valueOf(list.get(i).getPeople_min()));
-            d.put(from[5], "max people: " + String.valueOf(list.get(i).getPeople_max()));
+            d.put(from[0], list.get(i).getTitle());
+            d.put(from[1], list.get(i).getStart_date());
+            d.put(from[2], list.get(i).getEnd_date());
+//            d.put(from[3], String.valueOf(list.get(i).getPrice()));
+//            d.put(from[4], String.valueOf(list.get(i).getPeople_min()));
+//            d.put(from[5], String.valueOf(list.get(i).getPeople_max()));
             data.add(d);
         }
         adapter.notifyDataSetChanged();

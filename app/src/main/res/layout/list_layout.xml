@@ -15,74 +15,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp"
+        android:textColor="#000000"
         android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:singleLine="true"
         android:ellipsize="end"
         />
     
     <TextView
         android:id="@+id/item_start_date"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#9D9D9D"
         android:textSize="15dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@id/item_title"
         android:layout_below="@id/item_title"
         android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         />
     
     <TextView
         android:id="@+id/to"
-        android:layout_width="200dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:text="to"
-        android:textColor="#000000"
-        android:textSize="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/item_start_date"
+        android:textColor="#9D9D9D"
+        android:textSize="15dp"
+        android:layout_toRightOf="@id/item_start_date"
+        android:layout_alignBaseline="@id/item_start_date"
         android:gravity="center_horizontal" />
     
     <TextView
         android:id="@+id/item_end_date"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
+        android:textColor="#9D9D9D"
         android:textSize="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/to"
-        android:gravity="center_horizontal"
-        />
-
-    <TextView
-        android:id="@+id/item_price"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/item_title"
-        android:gravity="center_horizontal"
-        />
-    
-    <TextView
-        android:id="@+id/item_people_max"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/item_price"
-        android:gravity="center_horizontal"
-        />
-    
-    <TextView
-        android:id="@+id/item_people_min"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:textSize="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/item_people_max"
+        android:layout_toRightOf="@id/to"
+        android:layout_alignBaseline="@id/item_start_date"
         android:gravity="center_horizontal"
         />
     

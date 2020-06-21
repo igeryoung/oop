@@ -79,14 +79,14 @@ public class MyOrderActivity extends AppCompatActivity {
         //put data into list info manager
         for(int i = 0; i < list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
-            d.put(from[0], "title: " + list.get(i).getTitle());
-            d.put(from[1], "code: " + list.get(i).getOrderId());
+            d.put(from[0], list.get(i).getTitle());
+            d.put(from[1], "order number: " + list.get(i).getOrderId());
             d.put(from[2], "start date: " + list.get(i).getStart_date());
             d.put(from[3], "end date: " + list.get(i).getEnd_date());
             d.put(from[4], "adult: " + list.get(i).getAdult());
             d.put(from[5], "child: " + list.get(i).getChild());
             d.put(from[6], "baby: " + list.get(i).getBaby());
-            d.put(from[7], "price: " + list.get(i).getPrice());
+            d.put(from[7], "total price: " + list.get(i).getPrice());
             data.add(d);
         }
         adapter.notifyDataSetChanged();
@@ -101,14 +101,14 @@ public class MyOrderActivity extends AppCompatActivity {
         list = OrderDB.getOrderByCI(CID);
         for(int i = 0; i < list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
-            d.put(from[0], "title: " + list.get(i).getTitle());
-            d.put(from[1], "code: " + list.get(i).getOrderId());
+            d.put(from[0], list.get(i).getTitle());
+            d.put(from[1], "order number: " + list.get(i).getOrderId());
             d.put(from[2], "start date: " + list.get(i).getStart_date());
             d.put(from[3], "end date: " + list.get(i).getEnd_date());
             d.put(from[4], "adult: " + list.get(i).getAdult());
             d.put(from[5], "child: " + list.get(i).getChild());
             d.put(from[6], "baby: " + list.get(i).getBaby());
-            d.put(from[7], "price: " + list.get(i).getPrice());
+            d.put(from[7], "total price: " + list.get(i).getPrice());
             data.add(d);
         }
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,28 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".MyOrderActivity"
     android:orientation="vertical"
+    android:background="@drawable/gradient_blue"
     >
 
     <TextView
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
-
-        android:layout_width="match_parent"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-My Order-"
-        android:textSize="40sp"
-        />
-
-    <ListView
-        android:id="@+id/order_list"
-        android:layout_width="347dp"
-        android:layout_height="500dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
+        android:text="My Order"
         android:layout_marginTop="20dp"
-        android:scrollbars="vertical"
-        android:background="#7999"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:gravity="left"
         />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title"
+        android:background="@drawable/round_background_white"
+        android:layout_marginTop="20dp"
+        >
+        <ListView
+            android:id="@+id/order_list"
+            android:layout_width="380dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:scrollbars="vertical"
+            />
+    </RelativeLayout>
 
-</LinearLayout>
+
+
+</RelativeLayout>
 

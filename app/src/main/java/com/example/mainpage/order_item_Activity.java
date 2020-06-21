@@ -67,14 +67,14 @@ public class order_item_Activity extends AppCompatActivity {
         price.setText("price : " + order.getPrice());
         TextView people = findViewById(R.id.people);
         people.setText("people : " + tripset.getPeople_min() + "~" + tripset.getPeople_max());
-        TextView order_amount = findViewById(R.id.oder_amount);
+        TextView order_amount = findViewById(R.id.order_amount);
         order_amount.setText("" + remain);
 
-        TextView adult_num = findViewById(R.id.adult_num);
+        EditText adult_num = findViewById(R.id.input_old);
         adult_num.setText(""+ order.getAdult());
-        TextView child_num = findViewById(R.id.child_num);
+        EditText child_num = findViewById(R.id.input_adult);
         child_num.setText(""+ order.getChild());
-        TextView baby_num = findViewById(R.id.baby_num);
+        EditText baby_num = findViewById(R.id.input_baby);
         baby_num.setText(""+ order.getBaby());
     }
 
