@@ -32,7 +32,7 @@ public class MyOrderActivity extends AppCompatActivity {
     private ArrayList<CostumerOrder> list;
     int position = -1;
 
-
+    //initial database
     public MyOrderActivity() {
         new Thread(){
             public void run(){
@@ -46,21 +46,21 @@ public class MyOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
 
-        //get msg
+        //get msg from last page
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         CID = Integer.parseInt(id);
         System.out.println(id);
+
         //create list
         listView = findViewById(R.id.order_list);
         initList();
-        //Click list event
+
+        //Click list event : find which position user selected , and change to detail page of selected item ( order_item_Activity )
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 position = pos;
-                Toast.makeText(MyOrderActivity.this, "你點擊了第" + pos, Toast.LENGTH_SHORT).show();
-
                 String select_info = list.get(pos).allToString();
                 System.out.println("In MyOrderActivity select_info is " + select_info);
                 Intent next_page = new Intent(MyOrderActivity.this , order_item_Activity.class );
@@ -70,10 +70,13 @@ public class MyOrderActivity extends AppCompatActivity {
         });
     }
 
+    //when back to this page , we renew the list information.
     @Override
     protected void onResume() {
+        //clean old list
         data.clear();
         list = OrderDB.getOrderByCI(CID);
+        //put data into list info manager
         for(int i = 0; i < list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
             d.put(from[0], "title: " + list.get(i).getTitle());
@@ -90,10 +93,11 @@ public class MyOrderActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    //list create
     private void initList() {
         adapter = new SimpleAdapter(this, data, R.layout.order_layout, from , to);
         listView.setAdapter(adapter);
-
+        //put data into list info manager
         list = OrderDB.getOrderByCI(CID);
         for(int i = 0; i < list.size() ; i++){
             HashMap<String , String> d = new HashMap<>();
@@ -108,7 +112,8 @@ public class MyOrderActivity extends AppCompatActivity {
             data.add(d);
         }
     }
-
+    // Override finish to send result code
+    @Override
     public void finish(){
         setResult(-1000);
         super.finish();

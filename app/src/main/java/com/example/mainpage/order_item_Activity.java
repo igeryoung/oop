@@ -25,6 +25,7 @@ public class order_item_Activity extends AppCompatActivity {
     private int old_order_num;
     private int remain;
 
+    //initial database & get data
     public order_item_Activity() throws IOException {
         new Thread(){
             public void run(){
@@ -42,7 +43,8 @@ public class order_item_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_item_);
-        //init
+
+        //get msg from last page
         Intent intent = getIntent();
         String info = intent.getStringExtra("info");
         System.out.println(info);
@@ -55,6 +57,7 @@ public class order_item_Activity extends AppCompatActivity {
         showInfo();
     }
 
+    //show the info of Order
     public void showInfo(){
         TextView title = findViewById(R.id.title);
         title.setText(order.getTitle());
@@ -75,7 +78,9 @@ public class order_item_Activity extends AppCompatActivity {
         baby_num.setText(""+ order.getBaby());
     }
 
+    //onClick event of button certain : check the order is valid or not . If not, throw to exception to handle
     public void certain(View view) {
+        //get number from order blank
         EditText text_old = findViewById(R.id.input_old);
         String input_old = text_old.getText().toString();
         EditText text_adult = findViewById(R.id.input_adult);
@@ -84,19 +89,25 @@ public class order_item_Activity extends AppCompatActivity {
         String input_baby = text_baby.getText().toString();
 
         try {
+            //check input is integer or not
             if(isInteger(input_old) == false || isInteger(input_adult) == false || isInteger(input_baby) == false ) {
                 throw new Exception();
             }
+
+            //parse String to int
             order_num[0] = Integer.parseInt(input_old);
             order_num[1] = Integer.parseInt(input_adult);
             order_num[2] = Integer.parseInt(input_baby);
+
+            // if number is negative , reject request
             if(order_num[0] < 0 || order_num[1] < 0 || order_num[2] < 0){
                 Toast.makeText(order_item_Activity.this, "please enter non-negative number in order", Toast.LENGTH_SHORT).show();
                 return;
             }
-            System.out.println( "" + order_num[0] + order_num[1] + order_num[2]);
+
             int total = order_num[0] + order_num[1] + order_num[2];
-            System.out.println( "" + tripset.getPeople_max() + "~" + tripset.getPeople_min());
+
+            //check order number is satisfy given range or not
             if(total + remain > tripset.getPeople_max() || total + remain < tripset.getPeople_min()){
                 Toast.makeText(order_item_Activity.this, "error range", Toast.LENGTH_SHORT).show();
                 return;
@@ -112,17 +123,18 @@ public class order_item_Activity extends AppCompatActivity {
 
                 finish();
             }
-
         }catch (Exception e){
             Toast.makeText(order_item_Activity.this, "please enter a number in order", Toast.LENGTH_SHORT).show();
             return;
         }
     }
 
+    //onClick event of button cancel : finish current page
     public void cancel(View view) {
         finish();
     }
 
+    //check whether given String is Integer or not
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -135,16 +147,17 @@ public class order_item_Activity extends AppCompatActivity {
         return true;
     }
 
+    //onClick event of button delete : delete an order and renew database
     public void delete(View view){
         TripDB.updateTripSet(order.getTitle() , order.getStart_date() , order.getEnd_date() , old_order_num * -1);
         OrderDB.cancelOrder(order.getCostumerId() , order.getOrderId());
         finish();
     }
 
+    // Override finish to send total number of order to menu
     @Override
     public void finish(){
         setResult(order_num[0] + order_num[1] + order_num[2]);
-
         //add this order to database
         super.finish();
     }
