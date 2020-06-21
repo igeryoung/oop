@@ -173,8 +173,26 @@ public class menu_Activity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         EditText editText = (EditText) (v.findViewById(R.id.editText1));
                         String id = editText.getText().toString();
-                        Toast.makeText(getApplicationContext(), "你的id是" +
-                                id, Toast.LENGTH_SHORT).show();
+
+                        //check id is provided or not
+                        if(editText.getText().length() == 0){
+                            Toast.makeText(menu_Activity.this, "please enter costumer id", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //check id is integer or not
+                        if(isInteger(editText.getText().toString()) == false){
+                            Toast.makeText(menu_Activity.this, "please enter a number as costumer id", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        //parse ID to int and check is positive or not
+                        int CID = Integer.parseInt(editText.getText().toString());
+                        if(CID <= 0){
+                            Toast.makeText(menu_Activity.this, "please enter a number larger than 0 as costumer id", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         //jump to MyOrderActivity
                         Intent next_page = new Intent(menu_Activity.this , MyOrderActivity.class );
                         next_page.putExtra("id" , id);
@@ -182,5 +200,17 @@ public class menu_Activity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+    //check whether given String is Integer or not
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }
