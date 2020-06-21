@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/** Tripset's database, which can control version*/
 public class TripDB extends SQLiteOpenHelper {
     private final static int _DBVersion = 17; //<-- version
     private final static String _DBName = "tripSet.db";  //<-- db name
@@ -30,6 +31,7 @@ public class TripDB extends SQLiteOpenHelper {
         this.context = context;
     }
 
+    /** create table if not exist, and read trip_data_all.csv and travel_code.json in version's first time*/
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -109,6 +111,7 @@ public class TripDB extends SQLiteOpenHelper {
         }
     }
 
+    /** replace old table if we have newer version*/
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

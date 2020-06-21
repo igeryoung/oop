@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.mainpage.model.CostumerOrder;
 
+/** Order's database, which can control version*/
 public class OrderDB extends SQLiteOpenHelper {
     private final static int _DBVersion = 1; //<-- version
     private final static String _DBName = "order.db";  //<-- db name
@@ -14,6 +15,7 @@ public class OrderDB extends SQLiteOpenHelper {
         super(context, _DBName, null, _DBVersion);
     }
 
+    /** create table if not exist*/
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String SQL =  "CREATE TABLE IF NOT EXISTS " + CostumerOrder.DATABASE_TABLE + "( "
@@ -29,6 +31,7 @@ public class OrderDB extends SQLiteOpenHelper {
         db.execSQL(SQL);
     }
 
+    /** replace old table if we have newer version*/
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed, all data will be gone

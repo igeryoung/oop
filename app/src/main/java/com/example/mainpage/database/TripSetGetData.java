@@ -10,6 +10,7 @@ import com.example.mainpage.model.TripSet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/** Using SQLite as tripSet's database, and create some api*/
 public class TripSetGetData {
     private TripDB dbService;
 
@@ -17,6 +18,7 @@ public class TripSetGetData {
         dbService = new TripDB(context);
     }
 
+    /** insert TripSet into table*/
     public int insert(TripSet trip) {
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -35,6 +37,7 @@ public class TripSetGetData {
         return 1;
     }
 
+    /** Get TripSet with limit amount in the database*/
     public ArrayList<TripSet> getAll(int amount){
         SQLiteDatabase db = dbService.getReadableDatabase();
         String selectQuery =  "SELECT " +
@@ -74,6 +77,7 @@ public class TripSetGetData {
         return TripSetList;
     }
 
+    /** Get TripSets with specific keyword corresponding Title or Travel_Code_Name, and return as ArrayList*/
     public ArrayList<TripSet> searchBySubtitle(String target){
         SQLiteDatabase db = dbService.getReadableDatabase();
 
@@ -102,6 +106,7 @@ public class TripSetGetData {
         return TripSetList;
     }
 
+    /** Get certaina TripSets with corresponding tile, start_date and end_date, and return as ArrayList*/
     public ArrayList<TripSet> getCertain(String title, String start_date, String end_date){
         SQLiteDatabase db = dbService.getWritableDatabase();
         ArrayList<TripSet> tripList = new ArrayList<>();
@@ -132,6 +137,7 @@ public class TripSetGetData {
         return TripSetList;
     }
 
+    /** Update TripSet with LEGAL modified amounts of persons*/
     public int updateTripSet(String title, String start_date, String end_date, int amount){
         ArrayList<TripSet> list = getCertain(title, start_date, end_date);
         if(list.size() != 1){
@@ -148,6 +154,7 @@ public class TripSetGetData {
         }
     }
 
+    /** Update Travel_Code_Name of those TripSet with specific travel_Code*/
     public int updateTripSetTravelName(int travel_code, String travel_code_name, TripDB dbService){
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();

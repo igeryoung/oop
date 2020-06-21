@@ -9,12 +9,14 @@ import com.example.mainpage.model.CostumerOrder;
 
 import java.util.ArrayList;
 
+/** Using SQLite as order's database, and create some api*/
 public class OrderGetData {
     private OrderDB dbService;
     public OrderGetData(Context context) {
         dbService = new OrderDB(context);
     }
 
+    /** insert CustumerOrder order into order table and return order_Id, which is primary key autoincrement*/
     public int insert(CostumerOrder order) {
         SQLiteDatabase db = dbService.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -33,6 +35,7 @@ public class OrderGetData {
         return (int) Order_Id;
     }
 
+    /** Get all Costumer order and return as ArrayList*/
     public ArrayList<CostumerOrder> getAll(){
         SQLiteDatabase db = dbService.getReadableDatabase();
         String selectQuery =  "SELECT  " +
@@ -67,6 +70,7 @@ public class OrderGetData {
         return CostumerOrderList;
     }
 
+    /** Get CostumerOrder with specific costumerId and return as ArrayList*/
     public ArrayList<CostumerOrder> getOrderByCI(int costumerId){
         SQLiteDatabase db = dbService.getReadableDatabase();
 
@@ -94,6 +98,7 @@ public class OrderGetData {
         return CostumerOrderList;
     }
 
+    /** Get CostumerOrder with specific orderId and return as ArrayList*/
     public ArrayList<CostumerOrder> getOrderByOI(int orderId){
         SQLiteDatabase db = dbService.getReadableDatabase();
 
@@ -121,6 +126,7 @@ public class OrderGetData {
         return CostumerOrderList;
     }
 
+    /** Delete CostumerOrder with specific costumerId and orderId, return 1 if success, otherwise -1*/
     public int cancelOrder(int costumerId, int orderId){
         SQLiteDatabase db = dbService.getWritableDatabase();
         int ret = db.delete(CostumerOrder.DATABASE_TABLE, "costumerId=? AND orderId=?", new String[]{String.valueOf(costumerId), String.valueOf(orderId)});
@@ -128,6 +134,7 @@ public class OrderGetData {
         return ret;
     }
 
+    /** Modify CostumerOrder with specific costumerId and orderId, set the person amount according to parameter adult, child and baby*/
     public int modifyOrderPeople(int costumerId, int orderId, int adult, int child, int baby){
         ArrayList<CostumerOrder> order = getOrderByOI(orderId);
         if(order.size() != 1) {
